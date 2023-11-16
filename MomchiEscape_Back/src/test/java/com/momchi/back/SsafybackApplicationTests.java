@@ -1,14 +1,12 @@
-package com.banapresso.ssafyback;
+package com.momchi.back;
 
-import com.banapresso.ssafyback.Post.Post;
-import com.banapresso.ssafyback.Post.PostRepository;
-import com.banapresso.ssafyback.Post.PostService;
-import com.banapresso.ssafyback.Post.PostServiceImpl;
+import com.momchi.back.Post.Post;
+import com.momchi.back.Post.PostRepository;
+import com.momchi.back.Post.PostService;
+import com.momchi.back.Post.PostServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 @SpringBootTest
 class SsafybackApplicationTests {

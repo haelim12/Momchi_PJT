@@ -1,5 +1,6 @@
 <template>
-  <div id="container">
+  <div class="nav--container">
+    <img :src="logo" alt="없어" />
     <header>
       <nav>
         <RouterLink to="/">Home</RouterLink> |
@@ -13,15 +14,26 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import logo from "/images/chichiface.png";
+</script>
 
 <style scoped>
+img {
+  width: 70px;
+  padding-bottom: 30px;
+  height: auto;
+  text-align: center;
+}
 #container {
   text-align: center;
 }
 
-nav {
+.nav--container {
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 nav a {

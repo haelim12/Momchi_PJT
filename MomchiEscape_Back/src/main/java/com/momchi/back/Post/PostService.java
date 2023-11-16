@@ -1,4 +1,4 @@
-package com.banapresso.ssafyback.Post;
+package com.momchi.back.Post;
 
 import java.util.List;
 

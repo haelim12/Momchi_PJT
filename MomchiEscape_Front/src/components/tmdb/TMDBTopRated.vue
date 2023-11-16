@@ -32,19 +32,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import { ref, onMounted } from "vue";
+import axios from "axios";
 const movieList = ref([]);
 
 onMounted(() => {
   const options = {
-    method: 'GET',
-    url: 'https://api.themoviedb.org/3/movie/top_rated',
-    params: { language: 'en-US', page: '1' },
+    method: "GET",
+    url: "https://api.themoviedb.org/3/movie/top_rated",
+    params: { language: "en-US", page: "1" },
     headers: {
-      accept: 'application/json',
+      accept: "application/json",
       Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYTFhYzI5NzA5YTYxMTNkMmEwOWNjMWE2Y2IxMDM5YyIsInN1YiI6IjYwYTI3OTkxZTE4ZTNmMDA1OGUwYWY4YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-hckJBchZ-ggGUUdexTOmPhpr93Quku-PZ1SEPl4IDk',
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYTFhYzI5NzA5YTYxMTNkMmEwOWNjMWE2Y2IxMDM5YyIsInN1YiI6IjYwYTI3OTkxZTE4ZTNmMDA1OGUwYWY4YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-hckJBchZ-ggGUUdexTOmPhpr93Quku-PZ1SEPl4IDk",
     },
   };
 

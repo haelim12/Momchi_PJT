@@ -1,7 +1,7 @@
-package com.banapresso.ssafyback.Controller;
+package com.momchi.back.Controller;
 
-import com.banapresso.ssafyback.Post.Post;
-import com.banapresso.ssafyback.Post.PostService;
+import com.momchi.back.Post.Post;
+import com.momchi.back.Post.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

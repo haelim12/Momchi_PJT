@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.banapresso.ssafyback.Post.PostRepository">
-    <resultMap type="com.banapresso.ssafyback.Post.Post" id="PostMap">
+<mapper namespace="com.momchi.back.Post.PostRepository">
+    <resultMap type="com.momchi.back.Post.Post" id="PostMap">
         <result column="id" property="id"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
@@ -11,7 +11,7 @@
         <result column="viewCount" property="viewCount"/>
     </resultMap>
 
-    <insert id="save" parameterType="com.banapresso.ssafyback.Post.Post">
+    <insert id="save" parameterType="com.momchi.back.Post.Post">
         insert into Post
         values (#{id}, #{title}, #{content}, #{url}, #{part}, #{viewCount});
     </insert>
@@ -35,13 +35,13 @@
         where part=#{part};
     </select>
 
-    <update id="update" parameterType="com.banapresso.ssafyback.Post.Post">
+    <update id="update" parameterType="com.momchi.back.Post.Post">
         update Post
         set title=#{title}, content=#{content}, url=#{url}
         where id = #{id};
     </update>
 
-    <delete id="delete" parameterType="com.banapresso.ssafyback.Post.Post">
+    <delete id="delete" parameterType="com.momchi.back.Post.Post">
         delete from Post
         where id = #{id};
     </delete>

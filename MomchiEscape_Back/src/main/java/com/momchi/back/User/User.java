@@ -1,4 +1,4 @@
-package com.banapresso.ssafyback.User;
+package com.momchi.back.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

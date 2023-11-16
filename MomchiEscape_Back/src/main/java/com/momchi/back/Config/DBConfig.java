@@ -1,4 +1,4 @@
-package com.banapresso.ssafyback.Config;
+package com.momchi.back.Config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;

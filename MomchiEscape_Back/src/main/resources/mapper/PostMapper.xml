@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.banapresso.ssafyback.Post.PostRepository">
+    <resultMap type="com.banapresso.ssafyback.Post.Post" id="PostMap">
+        <result column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="url" property="url"/>
+        <result column="part" property="part"/>
+        <result column="viewCount" property="viewCount"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.banapresso.ssafyback.Post.Post">
+        insert into Post
+        values (#{id}, #{title}, #{content}, #{url}, #{part}, #{viewCount});
+    </insert>
+
+    <select id="getAllPosts" resultMap="PostMap">
+        select * from Post;
+    </select>
+
+    <select id="findById" resultMap="PostMap" parameterType="Long">
+        select * from Post
+        where id=#{id}
+    </select>
+
+    <select id="orderByViewCount" resultMap="PostMap">
+        select * from Post
+        order by viewCount desc;
+    </select>
+
+    <select id="findByPart" resultMap="PostMap" parameterType="String">
+        select * from Post
+        where part=#{part};
+    </select>
+
+    <update id="update" parameterType="com.banapresso.ssafyback.Post.Post">
+        update Post
+        set title=#{title}, content=#{content}, url=#{url}
+        where id = #{id};
+    </update>
+
+    <delete id="delete" parameterType="com.banapresso.ssafyback.Post.Post">
+        delete from Post
+        where id = #{id};
+    </delete>
+
+    <delete id="deleteById" parameterType="Long">
+        delete from Post
+        where id = #{id};
+    </delete>
+
+</mapper>

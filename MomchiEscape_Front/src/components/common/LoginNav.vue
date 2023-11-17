@@ -1,35 +1,34 @@
 <template>
   <div>
-    <TheHeaderNav />
-    <div class="body-container">
-      <h2>게시글</h2>
-      <button class="button" @click="toCreate">글 작성</button>
-      <RouterView />
+    <div class="login-bar">
+      <button class="button" @click="toLogin">Login</button>
+      <button class="button" @click="toRegist">Regist</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import TheHeaderNav from "../components/common/TheHeaderNav.vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
 const router = useRouter();
 
-const toCreate = () => {
-  router.push("/create");
+const toRegist = () => {
+  router.push("/regist");
+};
+
+const toLogin = () => {
+  router.push("/login");
 };
 </script>
 
 <style scoped>
-.body-container {
-  width: 100%;
-  height: 100vh;
-  background-color: aquamarine;
-  padding-top: 20px;
-  padding-left: 6%;
-  padding-right: 6%;
-  box-sizing: border-box;
+.login-bar {
+  margin-top: 20px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 .button {

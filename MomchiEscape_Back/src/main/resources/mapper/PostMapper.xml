@@ -9,6 +9,7 @@
         <result column="url" property="url"/>
         <result column="part" property="part"/>
         <result column="viewCount" property="viewCount"/>
+        <result column="user_id" property="userId"/>
     </resultMap>
 
     <insert id="save" parameterType="com.momchi.back.Post.Post">

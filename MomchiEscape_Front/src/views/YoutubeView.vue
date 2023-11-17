@@ -1,18 +1,18 @@
 <template>
   <div>
-    <h2>YoutubeView</h2>
-    <YoutubeVideoSearch />
-    <hr>
-    <YoutubeVideoDetail/>
+    <TheHeaderNav />
+    <h2>000님의</h2>
+    <hr />
+    <YoutubeVideoDetail />
     <hr />
     <YoutubeVideoList />
   </div>
 </template>
 
 <script setup>
-import YoutubeVideoSearch from '@/components/youtube/YoutubeVideoSearch.vue';
-import YoutubeVideoList from '@/components/youtube/YoutubeVideoList.vue';
-import YoutubeVideoDetail from '../components/youtube/YoutubeVideoDetail.vue';
+import YoutubeVideoList from "@/components/youtube/YoutubeVideoList.vue";
+import YoutubeVideoDetail from "../components/youtube/YoutubeVideoDetail.vue";
+import TheHeaderNav from "../components/common/TheHeaderNav.vue";
 </script>
 
 <style scoped></style>

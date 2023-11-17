@@ -1,12 +1,14 @@
 <template>
   <div>
-    <THeHeaderNav />
+    <LoginNavVue />
+    <MomChiVue />
     <RouterView />
   </div>
 </template>
 
 <script setup>
-import THeHeaderNav from "./components/common/TheHeaderNav.vue";
+import MomChiVue from "./components/common/MomChi.vue";
+import LoginNavVue from "./components/common/LoginNav.vue";
 </script>
 
 <style scoped></style>

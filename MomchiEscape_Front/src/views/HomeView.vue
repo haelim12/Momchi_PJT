@@ -23,8 +23,7 @@ import WeatherForecast from "../components/main/WeatherForecast.vue";
 <style scoped>
 .body-container {
   width: 100%;
-  height: 100vh;
-  /* background-color: aquamarine; */
+  min-height: 1022px;
   padding-top: 20px;
   padding-left: 6%;
   padding-right: 6%;
@@ -38,10 +37,10 @@ import WeatherForecast from "../components/main/WeatherForecast.vue";
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* background-color: blueviolet; */
+  padding-bottom: 20px;
+  border-bottom: solid 2px rgb(236, 236, 236);
 }
 .lower-container {
-  background-color: green;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

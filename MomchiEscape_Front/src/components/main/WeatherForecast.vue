@@ -13,10 +13,11 @@
         />
       </div>
       <div class="weather-info">
-        <div>기온 : {{ tmp }}℃</div>
-        <div>하늘상태 : {{ sky }}</div>
-        <div>강수형태 : {{ pty }}</div>
-        <div>강수확률 : {{ pop }}%</div>
+        <div class="info">기온 : {{ tmp }}℃</div>
+        <div class="info">비? : {{ weatherText }}</div>
+        <div class="info">강수확률 : {{ pop }}%</div>
+        <div class="info">최저기온 : {{ tmn }}℃</div>
+        <div class="info">최고기온 : {{ tmx }}℃</div>
       </div>
     </div>
   </div>
@@ -29,9 +30,17 @@ import {
   getTodayWeather,
 } from "@/util/weather-api/WeatherApi.js";
 
-const currentWeatherItems = ref([]);
-const todayWeatherItems = ref([]);
-const weatherImg = ref("/images/weather/cloudy.png");
+let currentWeatherItems = [];
+let todayWeatherItems = [];
+const weatherImg = ref("/images/weather/sunny.png");
+const weatherText = ref(" ");
+
+const sunnyImg = "/images/weather/sunny.png";
+const cloudyImg = "/images/weather/cloudy.png";
+const snowyImg = "/images/weather/snowy.png";
+const rainyImg = "/images/weather/rainy.png";
+
+
 const tmp = ref(null); // 기온
 const sky = ref(null); // 하늘 상태
 const pty = ref(null); // 강수 형태
@@ -42,20 +51,13 @@ const tmx = ref(0); // 일 최고기온
 onMounted(() => {
   getTodayWeather()
     .then((data) => {
-      console.log(data);
-      todayWeatherItems.value = data;
-      console.log(todayWeatherItems.value);
+      todayWeatherItems= data.item;
       setDayWeatherInfo();
       getCurrentWeather()
         .then((data) => {
-          currentWeatherItems.value = data;
+          currentWeatherItems = data.item;
           setCurrentWeatherInfo();
-          console.log(tmp.value);
-          console.log(sky.value);
-          console.log(pty.value);
-          console.log(pop.value);
-          console.log(tmn.value);
-          console.log(tmx.value);
+          setMainImgStatus();
         })
         .catch((e) => {
           console.log(e);
@@ -65,9 +67,32 @@ onMounted(() => {
       console.log(e);
     });
 });
+function setMainImgStatus() {
+  if (sky.value == "1") {
+    weatherImg.value = sunnyImg;
+    weatherText.value = "맑음";
+  }
+  if (sky.value == "3") {
+    weatherImg.value = cloudyImg;
+    weatherText.value = "구름 많음";
+  }
+  if (pty.value == "1") {
+    weatherImg.value = rainyImg;
+    weatherText.value = "비옴";
+  }
+  if (pty.value == "2") {
+    weatherImg.value = rainyImg;
+    weatherText.value = "비나 눈옴";
+  }
+  if (pty.value == "3") {
+    weatherImg.value = snowyImg;
+    weatherText.value = "눈옴"
+  }
+}
+
+
 function setDayWeatherInfo() {
-  console.log(todayWeatherItems.value);
-  todayWeatherItems.value.forEach((item, index) => {
+  todayWeatherItems.forEach((item, index) => {
     switch (item.category) {
       case "POP": // 강수 확률
         pop.value = item.fcstValue;
@@ -87,11 +112,11 @@ function setDayWeatherInfo() {
 function setCurrentWeatherInfo() {
   currentWeatherItems.forEach((item, index) => {
     switch (item.category) {
-      case "T1H":
-        tmp.value = item.fcstValue;
+      case "T1H": // 현재 온도 (섭씨)
+        tmp.value = item.obsrValue;
         break;
-      case "PTY":
-        pty.value = item.fcstValue;
+      case "PTY": // 강수 형태
+        pty.value = item.obsrValue;
         break;
     }
   });
@@ -103,7 +128,6 @@ function setCurrentWeatherInfo() {
 }
 .main-container {
   width: 29%;
-  /* background-color: #e0e0e0; */
   box-sizing: border-box;
   padding-top: 10px;
   padding-left: 5px;
@@ -127,14 +151,29 @@ function setCurrentWeatherInfo() {
   justify-content: space-around;
   align-items: center;
 }
-.weather-image {
+.weather-info{
+  width: 47%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  padding-left: 30px;
+}
+.info{
+  height: 25px;
+  font-size: 14px;
+  color: #565959;
+}
+.weather-image {
+  width: 44%;
+  height: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 .w-img {
-  width: 90px;
+  width: 100%;
 }
 </style>

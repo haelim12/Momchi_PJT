@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <LoginNavVue />
     <MomChiVue />
     <RouterView />
@@ -11,4 +11,8 @@ import MomChiVue from "./components/common/MomChi.vue";
 import LoginNavVue from "./components/common/LoginNav.vue";
 </script>
 
-<style scoped></style>
+<style scoped>
+.main{
+  min-width: 1100px;
+}
+</style>

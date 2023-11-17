@@ -41,7 +41,7 @@ function getCurrentWeather() {
       .get(API_URL_CURRENT, {
         params: {
           serviceKey: API_KEY,
-          numOfRows: 60,
+          numOfRows: 1000,
           pageNo: 1,
           dataType: "JSON",
           base_date: date,
@@ -67,7 +67,7 @@ function getTodayWeather() {
       .get(API_URL_DAY, {
         params: {
           serviceKey: API_KEY,
-          numOfRows: 60,
+          numOfRows: 1000,
           pageNo: 1,
           dataType: "JSON",
           base_date: date,

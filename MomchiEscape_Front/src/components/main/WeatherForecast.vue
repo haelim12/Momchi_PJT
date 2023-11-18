@@ -53,11 +53,11 @@ onMounted(() => {
     .then((data) => {
       todayWeatherItems= data.item;
       setDayWeatherInfo();
+      setDayWeatherDayInfo();
       getCurrentWeather()
         .then((data) => {
           currentWeatherItems = data.item;
           setCurrentWeatherInfo();
-          setMainImgStatus();
         })
         .catch((e) => {
           console.log(e);
@@ -67,31 +67,7 @@ onMounted(() => {
       console.log(e);
     });
 });
-function setMainImgStatus() {
-  if (sky.value == "1") {
-    weatherImg.value = sunnyImg;
-    weatherText.value = "맑음";
-  }
-  if (sky.value == "3") {
-    weatherImg.value = cloudyImg;
-    weatherText.value = "구름 많음";
-  }
-  if (pty.value == "1") {
-    weatherImg.value = rainyImg;
-    weatherText.value = "비옴";
-  }
-  if (pty.value == "2") {
-    weatherImg.value = rainyImg;
-    weatherText.value = "비나 눈옴";
-  }
-  if (pty.value == "3") {
-    weatherImg.value = snowyImg;
-    weatherText.value = "눈옴"
-  }
-}
-
-
-function setDayWeatherInfo() {
+function setCurrentWeatherInfo() {
   todayWeatherItems.forEach((item, index) => {
     switch (item.category) {
       case "POP": // 강수 확률
@@ -100,6 +76,19 @@ function setDayWeatherInfo() {
       case "SKY": // 하늘 상태
         sky.value = item.fcstValue;
         break;
+      case "TMN": // 일 최저기온
+        tmn.value = item.fcstValue;
+        break;
+      case "TMX": // 일 최고기온
+        tmx.value = item.fcstValue;
+        break;
+    }
+  });
+}
+
+function setDayWeatherDayInfo() {
+  todayWeatherItems.forEach((item, index) => {
+    switch (item.category) {
       case "TMN": // 일 최저기온
         tmn.value = item.fcstValue;
         break;

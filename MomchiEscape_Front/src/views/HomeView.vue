@@ -21,6 +21,9 @@ import WeatherForecast from "../components/main/WeatherForecast.vue";
 </script>
 
 <style scoped>
+*{
+  box-sizing: border-box;
+}
 .body-container {
   width: 100%;
   min-height: 1022px;
@@ -30,8 +33,8 @@ import WeatherForecast from "../components/main/WeatherForecast.vue";
   box-sizing: border-box;
 }
 .upper-container {
-  height: 25%;
-  min-height: 200px;
+  height: 30%;
+  min-height: 220px;
   margin-bottom: 20px;
   box-sizing: border-box;
   display: flex;

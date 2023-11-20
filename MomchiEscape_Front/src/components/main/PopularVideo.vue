@@ -3,7 +3,7 @@
     <div class="title">
       인기 동영상
     </div>
-    <iframe class="youtube" src="https://www.youtube.com/embed/L39bRZMCuoM?si=Wps6pqxaH1-ga79J" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe class="youtube" src="https://www.youtube.com/embed/9bKCi4qwwIk?si=3vOfQtJFCooNCXpZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     <div class="info">
         <div class="video-title">제목 : {{ popularVideo.title }}</div>
         <div class="video-content">부위 : {{ popularVideo.part }}</div>

@@ -15,4 +15,18 @@ function getVideos() {
   });
 }
 
-export { getVideos };
+function getVideosByLevel(level) {
+  console.log(`${API_URL}/${level}`);
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${API_URL}/${level}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+    })
+  })
+}
+
+export { getVideos, getVideosByLevel };

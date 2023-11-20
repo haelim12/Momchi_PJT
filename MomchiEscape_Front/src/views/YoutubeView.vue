@@ -6,6 +6,7 @@
         <div class="title">운동영상</div>
         <div class="video-nav">
           <div class="nav-blank"></div>
+          <div class="nav-button" @click="allClick" :class="{ active: all }"> 전체 </div>
             <div class="nav-button" @click="level1Click" :class="{ active: level1 }"> 초급 </div>
             <div class="nav-button" @click="level2Click" :class="{ active: level2 }"> 중급 </div>
             <div class="nav-button" @click="level3Click" :class="{ active: level3 }"> 고급 </div>
@@ -28,8 +29,9 @@
 import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
 import YoutbeVideoListItem from "@/components/youtube/YoutubeVideoListItem.vue";
 import { onMounted, ref } from "vue";
-import { getVideos } from "@/util/VideoApi";
+import { getVideos,getVideosByLevel } from "@/util/VideoApi";
 
+const all = ref(true);
 const level1 = ref(false);
 const level2 = ref(false);
 const level3 = ref(false);
@@ -39,30 +41,58 @@ const videoList = ref([]);
 onMounted(() => {
   getVideos()
     .then((data) => {
-      console.log(data);
       videoList.value = data;
     })
-    .catch(() => {
-      
+    .catch((e) => {
+      console.log(e);
     })
 })
 
-const level1Click = () => {
-    level1.value = true;
+const allClick = () => {
+  all.value = true;
+  level1.value = false;
   level2.value = false;
   level3.value = false;
-
+    getVideos()
+    .then((data) => {
+      videoList.value = data;
+    })
+    .catch((e) => {
+      console.log(e);
+    })
+}
+const level1Click = () => {
+    all.value = false;
+  level1.value = true;
+  level2.value = false;
+  level3.value = false;
+  videoCall(1);
 }
 const level2Click = () => {
+    all.value = false;
   level1.value = false;
   level2.value = true;
   level3.value = false;
+    videoCall(2);
 }
 const level3Click = () => {
+    all.value = false;
   level1.value = false;
   level2.value = false;
   level3.value = true;
+    videoCall(3);
 }
+
+function videoCall(level) {
+  getVideosByLevel(level)
+    .then((data) => {
+      videoList.value = data;
+    })
+    .catch((e) => {
+      console.log(e);
+  })
+}
+
 </script>
 
 <style scoped>

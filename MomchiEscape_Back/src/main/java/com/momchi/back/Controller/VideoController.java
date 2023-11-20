@@ -8,15 +8,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/videos")
 public class VideoController {
     private final VideoServiceImpl videoService;
-    @GetMapping("/videos/{videoId}")
+    @GetMapping
+    public ResponseEntity getAllVideos(){
+        return new ResponseEntity(videoService.getAllVideos(),HttpStatus.OK);
+    }
+    @GetMapping("/{level}")
+    public ResponseEntity getVideosByLevel(@PathVariable int level){
+        return new ResponseEntity(videoService.getByLevel(level), HttpStatus.OK);
+    }
+    @PutMapping("/{videoId}")
     public ResponseEntity updateViewCount(@PathVariable Long videoId){
         videoService.updateViewCount(videoId);
         return new ResponseEntity(HttpStatus.OK);
-    }
-    @GetMapping("/videos")
-    public ResponseEntity getAllVideos(){
-        return new ResponseEntity(videoService.getAllVideos(),HttpStatus.OK);
     }
 }

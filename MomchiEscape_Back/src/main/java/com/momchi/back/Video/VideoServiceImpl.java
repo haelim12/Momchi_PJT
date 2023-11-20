@@ -16,8 +16,16 @@ public class VideoServiceImpl {
     public List<Video> getAllVideos(){
         return videoRepository.getAllVideos();
     }
-    public List<Video> getByLevel(String level){
-        return videoRepository.getByLevel(level);
+    public List<Video> getByLevel(int level){
+        switch (level){
+            case 1:
+                return videoRepository.getByLevel("초보");
+            case 2:
+                return videoRepository.getByLevel("중수");
+            case 3:
+                return videoRepository.getByLevel("고수");
+        }
+        return null;
     }
     public void updateViewCount(Long videoId){
         videoRepository.updateViewCount(videoId);

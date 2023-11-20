@@ -3,18 +3,18 @@
 
 <mapper namespace="com.momchi.back.Post.PostRepository">
     <resultMap type="com.momchi.back.Post.Post" id="PostMap">
-        <result column="id" property="id"/>
+        <result column="post_id" property="postId"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
         <result column="url" property="url"/>
-        <result column="part" property="part"/>
-        <result column="viewCount" property="viewCount"/>
+        <result column="level" property="level"/>
+        <result column="likeCnt" property="likeCnt"/>
         <result column="user_id" property="userId"/>
     </resultMap>
 
     <insert id="save" parameterType="com.momchi.back.Post.Post">
-        insert into Post
-        values (#{id}, #{title}, #{content}, #{url}, #{part}, #{viewCount});
+        insert into Post (title, content, url, level, user_id)
+        values (#{title}, #{content}, #{url}, #{level}, #{userId});
     </insert>
 
     <select id="getAllPosts" resultMap="PostMap">
@@ -23,33 +23,27 @@
 
     <select id="findById" resultMap="PostMap" parameterType="Long">
         select * from Post
-        where id=#{id}
+        where post_id=#{postId}
     </select>
 
-    <select id="orderByViewCount" resultMap="PostMap">
+    <select id="orderByLikeCount" resultMap="PostMap">
         select * from Post
-        order by viewCount desc;
+        order by likeCnt desc;
     </select>
 
-    <select id="findByPart" resultMap="PostMap" parameterType="String">
+    <select id="findByLevel" resultMap="PostMap" parameterType="String">
         select * from Post
-        where part=#{part};
+        where level=#{level};
     </select>
 
     <update id="update" parameterType="com.momchi.back.Post.Post">
         update Post
         set title=#{title}, content=#{content}, url=#{url}
-        where id = #{id};
+        where post_id = #{postId};
     </update>
-
-    <delete id="delete" parameterType="com.momchi.back.Post.Post">
-        delete from Post
-        where id = #{id};
-    </delete>
 
     <delete id="deleteById" parameterType="Long">
         delete from Post
-        where id = #{id};
+        where post_id = #{postId};
     </delete>
-
 </mapper>

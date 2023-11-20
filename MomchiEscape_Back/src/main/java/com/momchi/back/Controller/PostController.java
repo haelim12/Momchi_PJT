@@ -17,7 +17,7 @@ public class PostController {
     private PostService postService;
 
     @PostMapping
-    public ResponseEntity<Post> save(Post post) {
+    public ResponseEntity<Post> save(@RequestBody Post post) {
         postService.save(post);
         return new ResponseEntity<Post>(post, HttpStatus.CREATED);
     }
@@ -34,19 +34,13 @@ public class PostController {
     }
 
     @GetMapping("/viewcount")
-    public ResponseEntity<List<Post>> getPostByViewCount() {
-        return new ResponseEntity<List<Post>>(postService.getPostByViewCount(), HttpStatus.OK);
+    public ResponseEntity<List<Post>> getPostByLikeCount() {
+        return new ResponseEntity<List<Post>>(postService.getPostByLikeCount(), HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody Post post) {
         postService.update(post);
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    @DeleteMapping
-    public ResponseEntity<Void> delete(@RequestBody Post post) {
-        postService.delete(post);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

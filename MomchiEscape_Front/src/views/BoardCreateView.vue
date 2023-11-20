@@ -17,24 +17,24 @@
         :placeholder="content.placeholder"
         @send-data="contentInput"
       />
+      <div class="name">종류 *</div>
+        <select v-model="selectedType" @change="onTypeChange" class="select">
+          <option value="" disabled selected>선택</option>
+          <option
+            v-for="(typeName, index) in type"
+            :key="index"
+            :value="typeName">
+            {{ typeName }}
+          </option>
+        </select>
       <PostInputForm
+        v-show="isUrlNeeded"
         :from="url"
         :name="url.name"
         :type="url.type"
         :placeholder="url.placeholder"
         @send-data="urlInput"
       />
-      <div class="name">종류 *</div>
-      <select v-model="selectedType" @change="onTypeChange" class="select">
-        <option value="" disabled selected>선택</option>
-        <option
-          v-for="(typeName, index) in type"
-          :key="index"
-          :value="typeName"
-        >
-          {{ typeName }}
-        </option>
-      </select>
       <div class="blank"></div>
       <button class="button" @click="create">작성</button>
     </div>
@@ -46,10 +46,10 @@ import PostInputForm from "@/components/board/PostInputForm.vue";
 
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-import { usePostStore } from "@/stores/postStore";
+import { savePost } from "../util/PostApi";
 import TheHeaderNav from "../components/common/TheHeaderNav.vue";
 
-const type = ["추천", "후기", "🍯팁"];
+const type = ["영상 추천", "후기", "🍯팁"];
 const title = ref({
   name: "제목 *",
   type: "text",
@@ -73,12 +73,12 @@ const url = ref({
 });
 
 const router = useRouter();
-const postStore = usePostStore();
 
 const titleValue = ref("");
 const contentValue = ref("");
 const typeValue = ref("");
 const selectedType = ref("");
+const isUrlNeeded = ref(false);
 
 const titleInput = (inputValue) => {
   titleValue.value = inputValue;
@@ -89,11 +89,30 @@ const contentInput = (inputValue) => {
 const urlInput = (inputValue) => {
   urlValue.value = inputValue;
 };
-const postTypeInput = (inputValue) => {
-  postTypeValue.value = inputValue;
+const onTypeChange = (inputValue) => {
+  console.log(inputValue.target.value);
+  selectedType.value = inputValue.target.value;
+  if (selectedType.value === "영상 추천") {
+    isUrlNeeded.value = true;
+    console.log(isUrlNeeded.value);
+  }
+  else {
+    isUrlNeeded.value = false;
+  }
 };
 
-const create = () => {};
+const create = () => {
+  if (titleValue.value && contentValue.value && postTypeValue.value) {
+    const post = {
+      title: titleValue.value,
+      content: contentValue.value,
+      url:urlValue.v
+    }
+    savePost()
+    
+  }
+
+};
 </script>
 
 <style scoped>

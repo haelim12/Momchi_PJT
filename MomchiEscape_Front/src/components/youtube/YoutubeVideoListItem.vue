@@ -2,20 +2,22 @@
   <div class="main-container">
     <iframe
       class="video-player"
-      :src="video.url"
-      title="{{ video.title }}"
+      :src="video.videoUrl"
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowfullscreen
     ></iframe>
     <div class="info">
-      <div class="video-title">제목 : {{ video.title }}</div>
-      <div class="video-content">레벨 : {{ video.level }}</div>
+      <div class="video-content" :style="{ 'background-color': buttonColor }">레벨 : {{ video.level }}</div>
+      <div class="video-cnt">조회수  {{ video.viewCnt }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { onMounted, ref } from "vue";
+const buttonColor = ref("");
+
 const props = defineProps({
   video: {
     type: Object,
@@ -23,7 +25,22 @@ const props = defineProps({
   },
 });
 
-const clickVideo = function () {};
+onMounted(() => {
+  switch (props.video.level) {
+    case "초보":
+      buttonColor.value = "#F8CED8"; // Set the color for 초보
+      break;
+    case "중수":
+      buttonColor.value = "#F092A6"; // Set the color for 중수
+      break;
+    case "고수":
+      buttonColor.value = "#E95776"; // Set the color for 고수
+      break;
+    default:
+      buttonColor.value = ""; // Default color if level is not matched
+  }
+});
+
 </script>
 
 <style scoped>
@@ -49,15 +66,27 @@ const clickVideo = function () {};
 .info {
   margin-top: 5px;
   padding-top: 5px;
-  padding-left: 7px;
-  height: 55px;
-  /* background-color: rgb(235, 235, 235); */
+  padding-left: 10px;
+  padding-right: 20px;
+  height:40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.video-title {
-  font-size: 16px;
+.video-cnt{
+  font-size: 14px;
   margin-bottom: 5px;
+  color: #333333;
 }
 .video-content {
   font-size: 12px;
+  color: white;
+  background-color:  #f3c4cfe3;
+  width: 80px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
 }
 </style>

@@ -13,17 +13,15 @@ public interface PostService {
     public Post selectPost(Long id);
 
     // 조회수 순 게시글 조회
-    public List<Post> getPostByViewCount();
+    public List<Post> getPostByLikeCount();
 
-    // 부위별 게시글 조회
-    public List<Post> getPostByPart(String part);
+    // 난이도별 게시글 조회
+    public List<Post> getPostByLevel(String level);
 
     // 게시글 수정
     public void update(Post post);
 
     // 게시글 삭제
-    public void delete(Post post);
-
     // 아이디로 게시글 삭제
     public void deleteById(Long id);
 }

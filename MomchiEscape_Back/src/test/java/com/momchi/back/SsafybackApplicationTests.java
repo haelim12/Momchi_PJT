@@ -34,22 +34,21 @@ class SsafybackApplicationTests {
     @Test
     void insertTest(){
         Post post = new Post();
-        post.setId(100L);
+        post.setPostId(100L);
         post.setTitle("asdf");
         post.setContent("고해림 하품 그만해");
         post.setUrl("진짜 엄청 졸려하네 아침점심저녁 다졸려함");
-        post.setPart("늦잠");
-        post.setViewCount(1L);
-
+        post.setLevel("늦잠");
+        post.setLikeCnt(1L);
         postRepository.save(post);
     }
 
     @Test
     void deleteTest() {
         Post post = new Post();
-        post.setId(100L);
+        post.setPostId(100L);
 
-        postRepository.delete(post);
+        postRepository.deleteById(post.getPostId());
 
     }
 }

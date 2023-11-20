@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.momchi.back.Video.VideoRepository">
+    <resultMap type="com.momchi.back.Video.Video" id="VideoMap">
+        <result column="video_id" property="videoId"/>
+        <result column="url" property="videoUrl"/>
+        <result column="level" property="level"/>
+        <result column="view_cnt" property="viewCnt" />
+    </resultMap>
+
+    <insert id="saveVideo" parameterType="com.momchi.back.Video.Video">
+        insert into Video(url, level)
+        values ( #{videoUrl}, #{level});
+    </insert>
+
+    <select id="getAllVideos" resultMap="VideoMap">
+        select * from Video;
+    </select>
+
+    <select id="getByLevel" resultMap="VideoMap" parameterType="String">
+        select * from Video
+        where level=#{level}
+    </select>
+
+    <select id="updateViewCount" resultMap="VideoMap" parameterType="Long">
+        update Video
+        set view_cnt = view_cnt + 1
+        where video_id = #{videoId};
+    </select>
+</mapper>

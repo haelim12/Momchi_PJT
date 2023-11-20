@@ -51,7 +51,7 @@ const isHover = ref(false);
 }
 
 .menu-bar a.router-link-exact-active {
-  color: #eac3c9;
+  color: #F092A6;
   margin-bottom: 10px;
 }
 </style>

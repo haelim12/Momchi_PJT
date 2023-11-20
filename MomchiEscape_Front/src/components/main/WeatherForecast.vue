@@ -24,10 +24,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import {
-  getCurrentWeather,
-  getTodayWeather,
-} from "@/util/weather-api/WeatherApi.js";
+import { getCurrentWeather, getTodayWeather } from "@/util/WeatherApi.js";
 
 let currentWeatherItems = [];
 let todayWeatherItems = [];
@@ -37,7 +34,6 @@ const sunnyImg = "/images/weather/sunny.png";
 const cloudyImg = "/images/weather/cloudy.png";
 const snowyImg = "/images/weather/snowy.png";
 const rainyImg = "/images/weather/rainy.png";
-
 
 const tmp = ref(0); // 기온
 const sky = ref(0); // 하늘 상태
@@ -49,7 +45,7 @@ const tmx = ref(0); // 일 최고기온
 onMounted(() => {
   getTodayWeather()
     .then((data) => {
-      todayWeatherItems= data.item;
+      todayWeatherItems = data.item;
       setDayWeatherInfo();
       getCurrentWeather()
         .then((data) => {
@@ -68,18 +64,21 @@ function setWeatherImg() {
   // Cloudy
   if (sky.value === 3 || sky.value == 4) {
     weatherImg.value = cloudyImg;
-  };
+  }
   // Rain
-  if (pty.value === 1 || pty.value === 2 || pty.value === 5
-  || pty.value === 6) {
+  if (
+    pty.value === 1 ||
+    pty.value === 2 ||
+    pty.value === 5 ||
+    pty.value === 6
+  ) {
     weatherImg.value = rainyImg;
-  };
+  }
   // Snow
   if (pty.value === 3 || pty.value === 7) {
     weatherImg.value = snowyImg;
   }
 }
-
 
 function setDayWeatherInfo() {
   todayWeatherItems.forEach((item, index) => {
@@ -112,6 +111,7 @@ function setCurrentWeatherInfo() {
 }
 .main-container {
   width: 29%;
+  min-width: 300px;
   height: 200px;
   box-sizing: border-box;
   padding-top: 10px;
@@ -136,7 +136,7 @@ function setCurrentWeatherInfo() {
   justify-content: space-around;
   align-items: center;
 }
-.weather-info{
+.weather-info {
   width: 47%;
   height: 100%;
   display: flex;
@@ -145,7 +145,7 @@ function setCurrentWeatherInfo() {
   justify-content: center;
   padding-left: 30px;
 }
-.info{
+.info {
   height: 25px;
   font-size: 14px;
   color: #565959;

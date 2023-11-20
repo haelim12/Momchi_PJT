@@ -36,28 +36,21 @@ function getCurrentTime() {
 function getAnnouncementTime() {
   const today = new Date();
   let hour = today.getHours();
-  if (3<=hour && hour<6) {
+  if (3 <= hour && hour < 6) {
     return "0200";
-  }
-  else if (6<=hour && hour<9) {
+  } else if (6 <= hour && hour < 9) {
     return "0500";
-  }
-  else if (9<=hour && hour<12) {
+  } else if (9 <= hour && hour < 12) {
     return "0800";
-  }
-  else if (12<=hour && hour<15) {
+  } else if (12 <= hour && hour < 15) {
     return "1100";
-  }
-  else if (15<=hour && hour<16) {
+  } else if (15 <= hour && hour < 16) {
     return "1400";
-  }
-  else if (16<=hour && hour<21) {
+  } else if (16 <= hour && hour < 21) {
     return "1700";
-  }
-  else if (21<=hour) {
+  } else if (21 <= hour) {
     return "2000";
-  }
-    else if (hour<3) {
+  } else if (hour < 3) {
     return "2300";
   }
 }

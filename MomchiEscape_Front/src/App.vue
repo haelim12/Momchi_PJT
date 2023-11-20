@@ -12,7 +12,7 @@ import LoginNavVue from "./components/common/LoginNav.vue";
 </script>
 
 <style scoped>
-.main{
-  min-width: 1100px;
+.main {
+  min-width: 750px;
 }
 </style>

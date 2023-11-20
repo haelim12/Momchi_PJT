@@ -13,13 +13,13 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-
 const router = useRouter();
-
 const isHover = ref(false);
 </script>
-
 <style scoped>
+* {
+  box-sizing: border-box;
+}
 .logo-img {
   width: auto;
   padding-bottom: 50px;
@@ -36,7 +36,7 @@ const isHover = ref(false);
 
 .nav--container {
   width: 100%;
-  height: 50px;
+  height: 70px;
   padding-top: 20px;
   display: flex;
   flex-direction: column;
@@ -52,5 +52,6 @@ const isHover = ref(false);
 
 .menu-bar a.router-link-exact-active {
   color: #eac3c9;
+  margin-bottom: 10px;
 }
 </style>

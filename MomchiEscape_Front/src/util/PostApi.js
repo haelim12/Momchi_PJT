@@ -15,10 +15,10 @@ function savePost(post) {
   });
 }
 
-function getPosts() {
+function getPostsByCategory(category) {
     return new Promise((resolve, reject) => {
       axios
-        .get(API_URL)
+        .get(`${API_URL}/category/${category}`)
         .then((response) => {
           resolve(response.data);
         })
@@ -28,4 +28,4 @@ function getPosts() {
     });
 }
 
-export { savePost, getPosts };
+export { savePost, getPostsByCategory };

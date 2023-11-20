@@ -30,7 +30,6 @@ const emit = defineEmits(["send-data"]);
 <style scoped>
 .input-container {
   width: 400px;
-  /* height: ; */
   display: flex;
   flex-direction: column;
   align-items: center;

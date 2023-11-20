@@ -25,7 +25,10 @@ public class UserController {
     public ResponseEntity login(@RequestBody User user) {
         return new ResponseEntity(userService.login(user), HttpStatus.OK);
     }
-
+    @GetMapping("/user/{id}")
+    public ResponseEntity getUserInfo(@PathVariable Long id) {
+        return new ResponseEntity(userService.findById(id), HttpStatus.OK);
+    }
     // 회원정보 수정 - put
     @PutMapping("/user/{id}")
     public ResponseEntity update(@RequestBody User user, @PathVariable Long id) {

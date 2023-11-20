@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8081/videos";
+const API_URL = "http://localhost:8081/like";
 
-function getVideos() {
-  return new Promise((resolve, reject) => {
+function checkLike(userId, postId) {
+    return new Promise((resolve, reject) => {
     axios
-      .get(API_URL)
+      .get(`${API_URL}?userId=${userId}&postId=${postId}`)
       .then((response) => {
         resolve(response.data);
       })
@@ -15,17 +15,18 @@ function getVideos() {
   });
 }
 
-function getVideosByLevel(level) {
+function likeApi(like) {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${API_URL}/${level}`)
+      .post(`${API_URL}`,like)
       .then((response) => {
         resolve(response.data);
       })
       .catch((e) => {
         reject(e);
-    })
-  })
+      });
+  });
 }
 
-export { getVideos, getVideosByLevel };
+
+export { checkLike, likeApi };

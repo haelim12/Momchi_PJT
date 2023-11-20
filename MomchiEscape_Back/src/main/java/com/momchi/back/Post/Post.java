@@ -12,7 +12,8 @@ public class Post {
     private String title;
     private String content;
     private Long userId;
+    private String contentType;
     private String url;
-    private String level;
+    private String level;  // 아 영 아 그 만 하 고 좀 자
     private Long likeCnt;
 }

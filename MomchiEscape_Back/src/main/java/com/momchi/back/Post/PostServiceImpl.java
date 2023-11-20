@@ -17,10 +17,17 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void save(Post post) {
-        System.out.println(post);
+        if(post.getContentType().equals("영상 추천")){
+            post.setUrl(refractorUrl(post.getUrl()));
+            Video video = new Video(post.getUrl(), post.getLevel());
+            videoService.saveVideo(video);
+        }
         postRepository.save(post);
-        Video video = new Video(post.getUrl(), post.getLevel());
-        videoService.saveVideo(video);
+    }
+
+    private String refractorUrl(String original){
+        String[] splitted = original.split("watch\\?v=");
+        return splitted[0]+"embed/"+splitted[1];
     }
 
     // 전체 게시글 가져오기
@@ -41,7 +48,22 @@ public class PostServiceImpl implements PostService{
         return postRepository.orderByLikeCount();
     }
 
-    // 부위별 게시글 조회
+    // 카테고리별 게시글 조회
+    @Override
+    public List<Post> getPostByCategory(int category) {
+        String contentType = "";
+        switch (category){
+            case 1: contentType = "영상 추천";
+                break;
+            case 2: contentType = "후기";
+                break;
+            case 3: contentType = "honey팁";
+                break;
+        }
+        return postRepository.findByCategory(contentType);
+    }
+
+    // 레벨별 게시글 조회
     @Override
     public List<Post> getPostByLevel(String level) {
         return postRepository.findByLevel(level);

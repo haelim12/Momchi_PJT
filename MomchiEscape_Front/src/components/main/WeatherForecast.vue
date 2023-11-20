@@ -67,24 +67,6 @@ onMounted(() => {
       console.log(e);
     });
 });
-function setCurrentWeatherInfo() {
-  todayWeatherItems.forEach((item, index) => {
-    switch (item.category) {
-      case "POP": // 강수 확률
-        pop.value = item.fcstValue;
-        break;
-      case "SKY": // 하늘 상태
-        sky.value = item.fcstValue;
-        break;
-      case "TMN": // 일 최저기온
-        tmn.value = item.fcstValue;
-        break;
-      case "TMX": // 일 최고기온
-        tmx.value = item.fcstValue;
-        break;
-    }
-  });
-}
 
 function setDayWeatherDayInfo() {
   todayWeatherItems.forEach((item, index) => {

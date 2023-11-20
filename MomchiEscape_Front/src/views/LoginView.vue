@@ -16,6 +16,7 @@ import InputForm from "@/components/user/InputForm.vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useFormStore } from "@/stores/formStore";
+import { loginApi } from "../util/UserApi";
 
 const router = useRouter();
 const formStore = useFormStore();
@@ -29,7 +30,33 @@ const emailInput = (inputValue) => {
 const passwordInput = (inputValue) => {
   passwordValue.value = inputValue;
 };
-const login = () => {};
+
+const login = () => {
+  if (emailValue.value && passwordValue.value) {
+    const user = {
+      email: emailValue.value,
+      password: passwordValue.value
+    };
+    
+    loginApi(user)
+      .then((data) => {
+        localStorage.setItem("user", JSON.stringify(data));
+        const loginUser = localStorage.getItem("user");
+        console.log(loginUser);
+      alert("로그인 완료!");
+      router.push("/").then(() => {
+          window.location.reload();
+        });
+      })
+      .catch(() => {
+        alert("아이디 또는 비밀번호가 잘못되었습니다");
+    })
+  }
+  else {
+    alert("제발 똑바로 입력하세요");
+  }
+}
+
 </script>
 <style scoped>
 .login-container {

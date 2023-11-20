@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post {
-    private Long id;
+    private Long postId;
     private String title;
     private String content;
     private Long userId;
     private String url;
-    private String part;
-    private Long viewCount;
+    private String level;
+    private Long likeCnt;
 }

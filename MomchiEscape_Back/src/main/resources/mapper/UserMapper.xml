@@ -9,22 +9,23 @@
         <result column="password" property="password"/>
         <result column="nickname" property="nickname"/>
         <result column="birthday" property="birthday"/>
+        <result column="level" property="level"/>
     </resultMap>
 
     <insert id="save" parameterType="com.momchi.back.User.User">
         insert into User
-        values (#{userId}, #{name}, #{email}, #{password}, #{nickname}, #{birthday})
+        values (#{userId}, #{name}, #{email}, #{password}, #{nickname}, #{birthday}, #{level})
     </insert>
 
 
     <select id="findById" resultMap="UserMap" parameterType="Long">
-        select * from User;
+        select * from User
         where user_id = #{userId}
     </select>
 
     <select id="findByEmail" resultMap="UserMap" parameterType="String">
-        select * from User;
-        where email = #{email}
+        SELECT * FROM User
+        WHERE email = #{email}
     </select>
 
     <select id="update" parameterType="com.momchi.back.User.User">

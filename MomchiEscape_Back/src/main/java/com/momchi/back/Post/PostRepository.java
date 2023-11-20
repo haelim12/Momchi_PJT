@@ -12,15 +12,14 @@ public interface PostRepository {
 
     // Read
     List<Post> getAllPosts();
-    Post findById(Long id);
-    List<Post> orderByViewCount();
-    List<Post> findByPart(String part);
+    Post findById(Long postId);
+    List<Post> orderByLikeCount();
+    List<Post> findByLevel(String level);
 
     // Update
     void update(Post post);
 
     // Delete
-    void delete(Post post);
-    void deleteById(Long id);
+    void deleteById(Long postId);
 
 }

@@ -1,4 +1,4 @@
-package com.treelog.treeback.Exception;
+package com.momchi.back.Exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

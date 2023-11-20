@@ -1,4 +1,4 @@
-package com.treelog.treeback.Util;
+package com.momchi.back.Exception;
 
 import lombok.Getter;
 

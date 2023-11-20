@@ -74,25 +74,21 @@ const regist = () => {
       email: emailValue.value,
       password: passwordValue.value,
       name: nameValue.value,
-      nickName: nickNameValue.value,
+      nickname: nickNameValue.value,
       birthday: birthdayValue.value,
       level: levelValue.value,
     };
     registApi(user)
       .then(() => {
-        console.log(data);
+        alert("회원 가입 되었습니다.");
+        router.push("/");
       })
-      .catch(() => {});
+      .catch(() => {
+        alert("중복된 이메일입니다.");
+      });
   } else {
     alert("똑바로 입력하세요");
   }
-
-  console.log(emailValue.value);
-  console.log(passwordValue.value);
-  console.log(nameValue.value);
-  console.log(nickNameValue.value);
-  console.log(birthdayValue.value);
-  console.log(levelValue.value);
 };
 </script>
 

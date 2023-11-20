@@ -26,7 +26,7 @@ const toCreate = () => {
   width: 100%;
   height: 100vh;
   background-color: aquamarine;
-  padding-top: 20px;
+  padding-top: 30px;
   padding-left: 6%;
   padding-right: 6%;
   box-sizing: border-box;

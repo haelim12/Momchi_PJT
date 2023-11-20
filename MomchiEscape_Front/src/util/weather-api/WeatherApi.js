@@ -4,7 +4,7 @@ const API_URL_CURRENT = `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.
 const API_URL_DAY =
   "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 const API_KEY =
-  "Gsc8g6lFzqJtUWn9q5im3d5DkD4ktxES2gBcjyZnjW2yfiBhPAGBIOpcNJ3aY9%2FD0RfyuIiLcoGswHRJ5OgABQ%3D%3D";
+  "Gsc8g6lFzqJtUWn9q5im3d5DkD4ktxES2gBcjyZnjW2yfiBhPAGBIOpcNJ3aY9/D0RfyuIiLcoGswHRJ5OgABQ==";
 const times = ["0200", "0500", "0800", "1100", "1400", "1700", "2000", "2300"];
 function getTodayDate() {
   const today = new Date();
@@ -31,6 +31,35 @@ function getCurrentTime() {
   }
   hour = hour < 10 ? "0" + hour : hour;
   return hour;
+}
+
+function getAnnouncementTime() {
+  const today = new Date();
+  let hour = today.getHours();
+  if (3<=hour && hour<6) {
+    return "0200";
+  }
+  else if (6<=hour && hour<9) {
+    return "0500";
+  }
+  else if (9<=hour && hour<12) {
+    return "0800";
+  }
+  else if (12<=hour && hour<15) {
+    return "1100";
+  }
+  else if (15<=hour && hour<16) {
+    return "1400";
+  }
+  else if (16<=hour && hour<21) {
+    return "1700";
+  }
+  else if (21<=hour) {
+    return "2000";
+  }
+    else if (hour<3) {
+    return "2300";
+  }
 }
 
 function getCurrentWeather() {
@@ -62,7 +91,7 @@ function getCurrentWeather() {
 function getTodayWeather() {
   return new Promise((resolve, reject) => {
     const date = getTodayDate();
-    const hour = getCurrentTime();
+    const hour = getAnnouncementTime();
     axios
       .get(API_URL_DAY, {
         params: {
@@ -71,7 +100,7 @@ function getTodayWeather() {
           pageNo: 1,
           dataType: "JSON",
           base_date: date,
-          base_time: "0500",
+          base_time: `${hour}`,
           nx: 61,
           ny: 125,
         },

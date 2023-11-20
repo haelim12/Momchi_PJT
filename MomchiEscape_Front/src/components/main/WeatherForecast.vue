@@ -14,7 +14,6 @@
       </div>
       <div class="weather-info">
         <div class="info">기온 : {{ tmp }}℃</div>
-        <div class="info">비? : {{ weatherText }}</div>
         <div class="info">강수확률 : {{ pop }}%</div>
         <div class="info">최저기온 : {{ tmn }}℃</div>
         <div class="info">최고기온 : {{ tmx }}℃</div>
@@ -33,7 +32,6 @@ import {
 let currentWeatherItems = [];
 let todayWeatherItems = [];
 const weatherImg = ref("/images/weather/sunny.png");
-const weatherText = ref(" ");
 
 const sunnyImg = "/images/weather/sunny.png";
 const cloudyImg = "/images/weather/cloudy.png";
@@ -41,9 +39,9 @@ const snowyImg = "/images/weather/snowy.png";
 const rainyImg = "/images/weather/rainy.png";
 
 
-const tmp = ref(null); // 기온
-const sky = ref(null); // 하늘 상태
-const pty = ref(null); // 강수 형태
+const tmp = ref(0); // 기온
+const sky = ref(0); // 하늘 상태
+const pty = ref(0); // 강수 형태
 const pop = ref(0); // 강수 확률
 const tmn = ref(0); // 일 최저기온
 const tmx = ref(0); // 일 최고기온
@@ -53,7 +51,6 @@ onMounted(() => {
     .then((data) => {
       todayWeatherItems= data.item;
       setDayWeatherInfo();
-      setDayWeatherDayInfo();
       getCurrentWeather()
         .then((data) => {
           currentWeatherItems = data.item;
@@ -67,8 +64,24 @@ onMounted(() => {
       console.log(e);
     });
 });
+function setWeatherImg() {
+  // Cloudy
+  if (sky.value === 3 || sky.value == 4) {
+    weatherImg.value = cloudyImg;
+  };
+  // Rain
+  if (pty.value === 1 || pty.value === 2 || pty.value === 5
+  || pty.value === 6) {
+    weatherImg.value = rainyImg;
+  };
+  // Snow
+  if (pty.value === 3 || pty.value === 7) {
+    weatherImg.value = snowyImg;
+  }
+}
 
-function setDayWeatherDayInfo() {
+
+function setDayWeatherInfo() {
   todayWeatherItems.forEach((item, index) => {
     switch (item.category) {
       case "TMN": // 일 최저기온
@@ -99,6 +112,7 @@ function setCurrentWeatherInfo() {
 }
 .main-container {
   width: 29%;
+  height: 200px;
   box-sizing: border-box;
   padding-top: 10px;
   padding-left: 5px;
@@ -145,6 +159,6 @@ function setCurrentWeatherInfo() {
   justify-content: center;
 }
 .w-img {
-  width: 100%;
+  width: 70%;
 }
 </style>

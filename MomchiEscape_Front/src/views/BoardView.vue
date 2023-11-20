@@ -2,7 +2,7 @@
   <div>
     <TheHeaderNav />
     <div class="body-container">
-      <h2>게시글</h2>
+      <div class="title">게시글</div>
       <button class="button" @click="toCreate">글 작성</button>
       <RouterView />
     </div>
@@ -46,5 +46,8 @@ const toCreate = () => {
   background-color: rgb(189, 188, 188);
   color: white;
   cursor: pointer;
+}
+.title {
+  font-size: 20px;
 }
 </style>

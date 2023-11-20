@@ -1,2 +1,5 @@
-package com.momchi.back.Video;public class Video {
+package com.momchi.back.Video;
+
+public class Video {
+
 }

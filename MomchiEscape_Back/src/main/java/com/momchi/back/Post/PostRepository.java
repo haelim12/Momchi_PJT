@@ -15,6 +15,7 @@ public interface PostRepository {
     Post findById(Long postId);
     List<Post> orderByLikeCount();
     List<Post> findByLevel(String level);
+    List<Post> findByCategory(String contentType);
 
     // Update
     void update(Post post);

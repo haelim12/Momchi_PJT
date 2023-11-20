@@ -23,8 +23,13 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Post>> getAllPosts() {
-        return new ResponseEntity<List<Post>>(postService.getAllPosts(), HttpStatus.OK);
+    public ResponseEntity getAllPosts() {
+        return new ResponseEntity(postService.getAllPosts(), HttpStatus.OK);
+    }
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity getAllPostsByCategory(@PathVariable int category) {
+        return new ResponseEntity(postService.getPostByCategory(category), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

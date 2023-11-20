@@ -7,9 +7,9 @@
         <div class="video-nav">
           <div class="nav-blank"></div>
           <div class="nav-button" @click="allClick" :class="{ active: all }"> 전체 </div>
-            <div class="nav-button" @click="level1Click" :class="{ active: level1 }"> 초급 </div>
-            <div class="nav-button" @click="level2Click" :class="{ active: level2 }"> 중급 </div>
-            <div class="nav-button" @click="level3Click" :class="{ active: level3 }"> 고급 </div>
+            <div class="nav-button" @click="level1Click" :class="{ active: level1 }"> 초보 </div>
+            <div class="nav-button" @click="level2Click" :class="{ active: level2 }"> 중수 </div>
+            <div class="nav-button" @click="level3Click" :class="{ active: level3 }"> 고수 </div>
         </div>
       </div>
       <div v-for="index in Math.ceil(videoList.length / 2)" :key="index">
@@ -62,25 +62,25 @@ const allClick = () => {
     })
 }
 const level1Click = () => {
-    all.value = false;
+  all.value = false;
   level1.value = true;
   level2.value = false;
   level3.value = false;
   videoCall(1);
 }
 const level2Click = () => {
-    all.value = false;
+  all.value = false;
   level1.value = false;
   level2.value = true;
   level3.value = false;
-    videoCall(2);
+  videoCall(2);
 }
 const level3Click = () => {
-    all.value = false;
+  all.value = false;
   level1.value = false;
   level2.value = false;
   level3.value = true;
-    videoCall(3);
+  videoCall(3);
 }
 
 function videoCall(level) {

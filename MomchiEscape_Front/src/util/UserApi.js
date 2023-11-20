@@ -27,4 +27,16 @@ function loginApi(user) {
   })
 }
 
-export { registApi, loginApi };
+function getUserInfo(id) {
+    return new Promise((resolve, reject) => {
+    axios.get(`${API_URL}/user/${id}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+    })
+  })
+}
+
+export { registApi, loginApi, getUserInfo };

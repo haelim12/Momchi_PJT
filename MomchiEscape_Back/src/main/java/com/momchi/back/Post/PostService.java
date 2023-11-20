@@ -9,13 +9,16 @@ public interface PostService {
     // 전체 게시글 가져오기
     public List<Post> getAllPosts();
 
+    // 카테고리 별 게시글 조회
+    public List<Post> getPostByCategory(int category);
+
     // 아이디로 게시글 찾기
     public Post selectPost(Long id);
 
     // 조회수 순 게시글 조회
     public List<Post> getPostByLikeCount();
 
-    // 난이도별 게시글 조회
+    // 난이도 별 게시글 조회
     public List<Post> getPostByLevel(String level);
 
     // 게시글 수정

@@ -15,8 +15,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-const buttonColor = ref("");
+import { computed, onMounted, ref } from "vue";
 
 const props = defineProps({
   video: {
@@ -25,21 +24,22 @@ const props = defineProps({
   },
 });
 
-onMounted(() => {
-  switch (props.video.level) {
+const buttonColor = computed(() => {
+    switch (props.video.level) {
     case "초보":
-      buttonColor.value = "#F8CED8"; // Set the color for 초보
+      return "#F8CED8"; 
       break;
     case "중수":
-      buttonColor.value = "#F092A6"; // Set the color for 중수
+      return "#F092A6"; 
       break;
     case "고수":
-      buttonColor.value = "#E95776"; // Set the color for 고수
+      return "#E95776"; 
       break;
     default:
-      buttonColor.value = ""; // Default color if level is not matched
+      return ""; 
   }
-});
+})
+
 
 </script>
 

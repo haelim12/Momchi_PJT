@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.momchi.back.Like.LikeRepository">
+    <resultMap type="com.momchi.back.Like.Like" id="LikeMap">
+        <result column="like_id" property="likeId"/>
+        <result column="user_id" property="userId"/>
+        <result column="post_id" property="postId"/>
+    </resultMap>
+
+    <select id="checkLike" parameterType="com.momchi.back.Like.Like">
+        select exists (
+            select * from PostLike
+            where user_id = #{userId} and post_id = #{postId}
+        ) as result;
+    </select>
+
+    <select id="findByUserAndPost" parameterType="com.momchi.back.Like.Like">
+        select like_id from PostLike
+        where user_id = #{userId} and post_id = #{postId};
+    </select>
+
+    <insert id="saveLike" parameterType="com.momchi.back.Like.Like">
+        insert into PostLike (user_id, post_id)
+        values (#{userId}, #{postId});
+    </insert>
+
+    <delete id="unLike" parameterType="Long">
+        delete from PostLike
+        where like_id = #{likeId};
+    </delete>
+
+</mapper>

@@ -8,7 +8,7 @@
     </div>
     <div class="under-nav">
       <!-- <img class="img" :src="logo"/>  -->
-      <div>Written by : {{ writerUser.name }}</div>
+      <div>Written by : {{ writerUser.nickname }}</div>
       <img class="like_img" :src="likeImg" @click="onLikeClick" />
     </div>
   </div>

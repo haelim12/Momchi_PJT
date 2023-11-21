@@ -39,4 +39,5 @@ function getUserInfo(id) {
   })
 }
 
+
 export { registApi, loginApi, getUserInfo };

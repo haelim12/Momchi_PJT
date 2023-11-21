@@ -54,7 +54,7 @@ const allClick = () => {
   level2.value = false;
   level3.value = false;
     getVideos()
-    .then((data) => {
+      .then((data) => {
       videoList.value = data;
     })
     .catch((e) => {

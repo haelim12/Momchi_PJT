@@ -3,25 +3,45 @@
     <iframe
       class="video-player"
       :src="video.videoUrl"
+      controls="2"
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowfullscreen
     ></iframe>
     <div class="info">
       <div class="video-content" :style="{ 'background-color': buttonColor }">레벨 : {{ video.level }}</div>
-      <div class="video-cnt">조회수  {{ video.viewCnt }}</div>
+      <button v-if="isLoggedIn" class="video-start-button" @click="recordClick">운동 시작</button>
+      <div class="video-cnt">함께 운동중 {{ video.viewCnt }} 명</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watchEffect } from "vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/userStore";
+
+const userStore = useUserStore();
+const router = useRouter();
+
+const isLoggedIn = computed(() => {
+  const user = userStore.user;
+  if (user) {
+    return true;
+  }
+  else {
+    return false;
+  }
+})
 
 const props = defineProps({
   video: {
     type: Object,
     required: true,
   },
+});
+
+watchEffect(() => {
 });
 
 const buttonColor = computed(() => {
@@ -40,6 +60,10 @@ const buttonColor = computed(() => {
   }
 })
 
+function recordClick() {
+  localStorage.setItem("video", JSON.stringify(props.video));
+  router.push("/record");
+}
 
 </script>
 
@@ -77,6 +101,24 @@ const buttonColor = computed(() => {
   font-size: 14px;
   margin-bottom: 5px;
   color: #333333;
+}
+.video-start-button {
+  width: 80px;
+  height: 30px;
+  font-size: 14px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgba(65, 65, 65, 0.31);
+  background-color: #ffffff;
+  color: #333333b9;
+  margin: 2px;
+}
+.video-start-button:hover {
+  color: white;
+  border: none;
+  background-color: #F092A6;
+  cursor: pointer;
 }
 .video-content {
   font-size: 12px;

@@ -5,12 +5,22 @@
       <button class="button" @click="toRegist">Regist</button>
     </div>
     <div v-if="!isLoggedin" class="login-bar">
-      <div class="profile_name">{{ userStore.user.name }}님 안녕하세요</div>
+      <div class="profile_name">{{ userStore.user.nickname }}님 반갑습니다람쥐</div>
       <div class="nav-blank"></div> 
       
       <img class="img" :src="logo" @click="toProfile"/> 
       <div class="nav-blank_1"></div> 
       <button class="button" @click="logout">Logout</button>
+
+      <!-- <div class="dropdown">
+            <button class="profile--image rounded-circle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{% 'images/pinkchichiface.png' %}" alt="" class="object-fit-fill profile">
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" @click="toProfile">{{ user }}</a></li>
+              <li><a class="dropdown-item" @click="logout">Logout</a></li>
+            </ul>
+          </div> -->
     </div>
   </div>
 </template>

@@ -42,7 +42,6 @@ const login = () => {
       .then((data) => {
         localStorage.setItem("user", JSON.stringify(data));
         const loginUser = localStorage.getItem("user");
-        console.log(loginUser);
       alert("로그인 완료!");
       router.push("/").then(() => {
           window.location.reload();

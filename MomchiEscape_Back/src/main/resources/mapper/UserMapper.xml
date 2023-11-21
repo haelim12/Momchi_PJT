@@ -27,6 +27,16 @@
         SELECT * FROM User
         WHERE email = #{email}
     </select>
+    <select id="getUserByRecord" resultMap="UserMap">
+        <![CDATA[
+        SELECT u.user_id, u.name, u.email, u.password, u.nickname, u.birthday, u.level
+        FROM User u
+        JOIN Record r ON u.user_id = r.user_id
+        GROUP BY u.user_id
+        ORDER BY COUNT(r.record_id) DESC
+        LIMIT 10;
+        ]]>
+    </select>
 
     <select id="update" parameterType="com.momchi.back.User.User">
         update User

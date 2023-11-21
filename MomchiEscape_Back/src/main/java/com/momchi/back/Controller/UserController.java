@@ -35,6 +35,11 @@ public class UserController {
         return new ResponseEntity(userService.update(user), HttpStatus.OK);
     }
 
+    @GetMapping("/user")
+    public ResponseEntity getPopularUser(){
+        return new ResponseEntity<>(userService.getPopularUser(), HttpStatus.OK);
+    }
+
     // 회원 탈퇴 - delete
     @DeleteMapping("/user/{id}")
     public ResponseEntity delete(@PathVariable Long id) {

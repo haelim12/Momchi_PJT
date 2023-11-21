@@ -19,6 +19,10 @@ public class VideoController {
     public ResponseEntity getVideosByLevel(@PathVariable int level){
         return new ResponseEntity(videoService.getByLevel(level), HttpStatus.OK);
     }
+    @GetMapping("/popular")
+    public ResponseEntity getPopularVideo(){
+        return new ResponseEntity(videoService.getPopularVideo(),HttpStatus.OK);
+    }
     @PutMapping("/{videoId}")
     public ResponseEntity updateViewCount(@PathVariable Long videoId){
         videoService.updateViewCount(videoId);

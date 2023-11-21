@@ -3,10 +3,12 @@ import HomeView from "@/views/HomeView.vue";
 import YoutubeView from "@/views/YoutubeView.vue";
 import BoardView from "@/views/BoardView.vue";
 import BoardCreateView from "@/views/BoardCreateView.vue";
+import RecordView from "@/views/RecordView.vue";
 
 import LoginView from "@/views/LoginView.vue";
 import ProfileView from "@/views/ProfileView.vue";
 import RegistView from "@/views/RegistView.vue";
+import ProfileEditView from "@/views/ProfileEditView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +47,16 @@ const router = createRouter({
       path: "/regist",
       name: "regist",
       component: RegistView,
+    },
+    {
+      path: "/record",
+      name: "record",
+      component: RecordView,
+    },
+    {
+      path: "/profile-edit",
+      name: "profileEdit",
+      component: ProfileEditView,
     },
   ],
 });

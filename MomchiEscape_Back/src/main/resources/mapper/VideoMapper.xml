@@ -23,6 +23,12 @@
         where level=#{level}
     </select>
 
+    <select id="getPopularVideo" resultMap="VideoMap">
+        select * from Video
+        order by view_cnt desc
+        limit 1;
+    </select>
+
     <select id="updateViewCount" resultMap="VideoMap" parameterType="Long">
         update Video
         set view_cnt = view_cnt + 1

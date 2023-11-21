@@ -12,9 +12,8 @@ public interface UserRepository {
 
     // Read
     User findById(Long userId);
-
     User findByEmail(String email);
-
+    List<User> getUserByRecord();
     // Update
     void update(User user);
 

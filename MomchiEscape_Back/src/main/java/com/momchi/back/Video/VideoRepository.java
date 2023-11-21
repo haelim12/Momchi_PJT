@@ -7,5 +7,6 @@ public interface VideoRepository {
     void saveVideo(Video video);
     List<Video> getAllVideos();
     List<Video> getByLevel(String level);
+    Video getPopularVideo();
     void updateViewCount(Long videoId);
 }

@@ -4,7 +4,7 @@
     <div class="body-container">
       <div class="title-container">
           <div class="title">Board</div>
-          <button class="button" @click="toCreate">글 작성</button>
+          <button v-if="isLoggedIn" class="button" @click="toCreate">글 작성</button>
       </div>
       <div class="contents-container">
         <div class="small-title">영상 추천 👍</div>
@@ -38,14 +38,26 @@
 import TheHeaderNav from "../components/common/TheHeaderNav.vue";
 import Post from "@/components/board/Post.vue";
 import { useRouter } from "vue-router";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { getPostsByCategory } from "@/util/PostApi.js";
+import { useUserStore } from "@/stores/userStore";
 
+const userStore = useUserStore();
 const router = useRouter();
 
 const recommend = ref([]);
 const review = ref([]);
 const honeytip = ref([]);
+
+const isLoggedIn = computed(() => {
+  const user = userStore.user;
+  if (user) {
+    return true;
+  }
+  else {
+    return false;
+  }
+})
 
 onMounted(() => {
   getPostsByCategory(1)

@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div v-if="!isLoggedin" >
-      <div class="title">{{ userStore.user.name }}님, 오늘도 좋은 운동 되세요.</div>
+      <div class="title">{{ userStore.user.nickname }}님, 오늘도 좋은 운동 되세요.</div>
       <div class="content-container">
         <div class="info"> 현재까지 스트릭은 00일 입니다</div>
         <div class="encouragement"> 오늘도 몸치탈출 화이팅!</div>

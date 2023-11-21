@@ -8,5 +8,6 @@ public interface VideoRepository {
     List<Video> getAllVideos();
     List<Video> getByLevel(String level);
     Video getPopularVideo();
+    Video getVideoById(Long videoId);
     void updateViewCount(Long videoId);
 }

@@ -18,7 +18,7 @@ function getVideos() {
 function getVideosByLevel(level) {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${API_URL}/${level}`)
+      .get(`${API_URL}/level/${level}`)
       .then((response) => {
         resolve(response.data);
       })
@@ -28,4 +28,30 @@ function getVideosByLevel(level) {
   })
 }
 
-export { getVideos, getVideosByLevel };
+function getVideoById(videoId) {
+    return new Promise((resolve, reject) => {
+    axios
+      .get(`${API_URL}/${videoId}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+    })
+  })
+}
+
+function getPopularVideo() {
+    return new Promise((resolve, reject) => {
+    axios
+      .get(`${API_URL}/popular`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+    })
+  })
+}
+
+export { getVideos, getVideosByLevel, getVideoById, getPopularVideo };

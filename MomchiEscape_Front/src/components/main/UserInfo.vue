@@ -3,7 +3,7 @@
     <div v-if="!isLoggedin" >
       <div class="title">{{ userStore.user.nickname }}님, 오늘도 좋은 운동 되세요.</div>
       <div class="content-container">
-        <div class="info"> 현재까지 스트릭은 00일 입니다</div>
+        <div class="info"> 현재까지 스트릭은 {{ streakMsg }}일 입니다</div>
         <div class="encouragement"> 오늘도 몸치탈출 화이팅!</div>
       </div>
     </div>
@@ -23,9 +23,30 @@
 import { computed, onMounted, onUpdated, ref } from "vue";
 import { useUserStore } from "@/stores/userStore";
 import { useRouter } from "vue-router";
+import { getStreak } from "@/util/RecordApi";
 
 const router = useRouter();
 const userStore = useUserStore();
+const currentStreak = ref(0);
+const streakMsg = computed(() => {
+  if (currentStreak.value < 10) {
+    return "0" + currentStreak.value;
+  }
+  else {
+    return currentStreak.value;
+  }
+})
+
+onMounted(() => {
+    getStreak(userStore.user.userId)
+    .then((data) => {
+      currentStreak.value = data;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+})
+
 const isLoggedin = computed(() => {
   if (!userStore.user) {
     return true;

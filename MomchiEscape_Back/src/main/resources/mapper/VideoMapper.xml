@@ -29,6 +29,11 @@
         limit 1;
     </select>
 
+    <select id="getVideoById" resultMap="VideoMap" parameterType="Long">
+        select * from Video
+        where video_id=#{videoId}
+    </select>
+
     <select id="updateViewCount" resultMap="VideoMap" parameterType="Long">
         update Video
         set view_cnt = view_cnt + 1

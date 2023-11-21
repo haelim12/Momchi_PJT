@@ -44,6 +44,7 @@ const props = defineProps({
 watchEffect(() => {
 });
 
+
 const buttonColor = computed(() => {
     switch (props.video.level) {
     case "초보":

@@ -39,5 +39,17 @@ function getUserInfo(id) {
   })
 }
 
+function getPopularUser() {
+    return new Promise((resolve, reject) => {
+    axios.get(`${API_URL}/user`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+    })
+  })
+}
 
-export { registApi, loginApi, getUserInfo };
+
+export { registApi, loginApi, getUserInfo, getPopularUser };

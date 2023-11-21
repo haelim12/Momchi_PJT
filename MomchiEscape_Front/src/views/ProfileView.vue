@@ -1,51 +1,64 @@
 <template>
-    <TheHeaderNav />
-    <div class="body-container">
-      <div class="title-container">
-          <div class="title">Profile</div>
-      </div>
-      <div class="profile-container">
-        <div class="profile-img">
-          <div class="profile-img-left">
-            <img class="img" :src="profile"/> </div>
-          <div class="profile-img-right">
-            <div class="profile_name"><strong>{{ userStore.user.nickname }}</strong> 님의 프로필</div>
-            <div class="streak-day">00 일 째 운동중 .. 💢</div>
-            <div class = "edit-delete">
-              <div class="profile-edit" @click="toEdit">수정</div>
-              <div class="profile-delete" @click="toDelete">탈퇴</div>
+    <TheHeaderNav /> 
+    <div class="main-container">
+      <div class="body-container">
+        <div class="title-container">
+            <div class="title">Profile</div>
+        </div>
+        <div class="profile-container">
+          <div class="profile-img">
+            <div class="profile-img-left">
+              <img class="img" :src="profile"/> </div>
+            <div class="profile-img-right">
+              <div class="profile_name"><strong>{{ userStore.user.nickname }}</strong> 님의 프로필</div>
+              <div class="streak-day">{{ streakMsg }} 일 째 운동중 .. 💢</div>
+              <div class = "edit-delete">
+                <div class="profile-edit" @click="toEdit">수정</div>
+                <div class="profile-delete" @click="toDelete">탈퇴</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="streak-title">Streak</div>
-        <div class="profile-streak">
-          <div v-for="(monthDays, index) in daysInYear" :key="index">
-            <Streak :monthDays="monthDays" :index="index" />
+          <div class="streak-title">Streak</div>
+          <div class="profile-streak">
+            <div v-for="(monthDays, index) in daysInYear" :key="index">
+              <Streak :monthDays="monthDays" :index="index" />
+            </div>
           </div>
-        </div>
-        <div class="streak-title">Exercise-Log</div>
-        <div class="lower-container">
-          <LogHeader/>
-          <Log/>
-          <Log/>
-          <Log/>
+          <div class="streak-title">Exercise-Log</div>
+          <div class="lower-container">
+            <LogHeader/>
+            <Log v-for="(log, index) in recordStore.records" :key="index" :log="log" />
+          </div>
         </div>
       </div>
     </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import TheHeaderNav from "../components/common/TheHeaderNav.vue";
 import Streak from "@/components/profile/Streak.vue";
 import Log from "@/components/profile/Log.vue";
 import LogHeader from "@/components/profile/LogHeader.vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/userStore";
+import { getStreak, getAllRecord } from "../util/RecordApi";
+import { useRecordStore } from "../stores/recordStore";
 
 const router = useRouter();
-const userStore= useUserStore();
+const userStore = useUserStore();
+const recordStore = useRecordStore();
 const profile = "/images/profile_chichi_body.png";
+const currentStreak = ref(0);
+
+const streakMsg = computed(() => {
+  if (currentStreak.value <10) {
+    return "0" + currentStreak.value;
+  }
+  else {
+    return currentStreak.value;
+  }
+})
 
 const toEdit = () => {
   router.push("/profile-edit");
@@ -59,6 +72,21 @@ const daysInYear = ref([]);
 
 onMounted(() => {
   getAllDaysInYear();
+  getStreak(userStore.user.userId)
+    .then((data) => {
+      currentStreak.value = data;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
+  getAllRecord(userStore.user.userId)
+    .then((data) => {
+      recordStore.records = data.slice(0, 17);
+    })
+    .catch((e) => {
+      console.log(e);
+    })
 })
 
 const getAllDaysInYear = () => {
@@ -78,6 +106,11 @@ const getAllDaysInYear = () => {
 * {
   box-sizing: border-box;
 }
+.main-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .title-container{
   display: flex;
   align-items: center;
@@ -91,10 +124,10 @@ const getAllDaysInYear = () => {
 .body-container {
   width: 100%;
   height: 120vh;
+  max-width: 1200px;
   padding-top: 30px;
   padding-left: 6%;
   padding-right: 6%;
-  /* background-color: yellow; */
 }
 .title {
   font-size: 20px;
@@ -102,7 +135,6 @@ const getAllDaysInYear = () => {
 .profile-container {
   width: 100%;
   height: 100%;
-  /* background-color: aqua; */
 }
 
 /* Profile-img */

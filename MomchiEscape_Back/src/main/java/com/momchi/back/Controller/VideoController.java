@@ -15,9 +15,13 @@ public class VideoController {
     public ResponseEntity getAllVideos(){
         return new ResponseEntity(videoService.getAllVideos(),HttpStatus.OK);
     }
-    @GetMapping("/{level}")
+    @GetMapping("/level/{level}")
     public ResponseEntity getVideosByLevel(@PathVariable int level){
         return new ResponseEntity(videoService.getByLevel(level), HttpStatus.OK);
+    }
+    @GetMapping("/{videoId}")
+    public ResponseEntity getVideoById(@PathVariable Long videoId){
+        return new ResponseEntity(videoService.getVideoById(videoId),HttpStatus.OK);
     }
     @GetMapping("/popular")
     public ResponseEntity getPopularVideo(){

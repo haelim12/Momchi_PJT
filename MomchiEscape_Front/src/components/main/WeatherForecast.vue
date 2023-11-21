@@ -112,6 +112,7 @@ function setCurrentWeatherInfo() {
 .main-container {
   width: 29%;
   min-width: 300px;
+  max-width: 400px;
   height: 200px;
   box-sizing: border-box;
   padding-top: 10px;

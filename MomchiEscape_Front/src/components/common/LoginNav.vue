@@ -53,7 +53,9 @@ const toLogin = () => {
 
 const logout = () => {
   localStorage.clear();
-  window.location.reload();
+  router.push("/").then(() => {
+    window.location.reload();
+  });
 };
 
 const toProfile = () => {

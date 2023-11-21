@@ -1,14 +1,55 @@
 <template>
     <div class="container">
-        <div class="info"> date</div>
-        <div class="info"> time</div>
-        <div class="info url"> videourl</div>
-        <div class="button"> delete</div>
+        <div class="info"> {{ props.log.date }}</div>
+        <div class="info"> {{ props.log.time }}</div>
+        <div class="info url"> {{ videoUrl }}</div>
+        <div class="button" @click="deleteClick"> 기록 삭제 </div>
     </div>
 </template>
 
 <script setup>
+import { computed, onMounted, ref, watchEffect } from 'vue';
+import { useRouter } from 'vue-router';
+import { useRecordStore } from "@/stores/recordStore";
+import { getAllRecord, deleteRecord } from "@/util/RecordApi";
+import { useUserStore } from "@/stores/userStore";
+import { getVideoById } from "@/util/VideoApi";
 
+const recordStore = useRecordStore();
+const userStore = useUserStore();
+const videoUrl = ref("");
+
+const props = defineProps({
+    log: {
+        type: Object,
+        required: true,
+    },
+});
+
+watchEffect(() => {
+    getVideoById(props.log.videoId)
+        .then((videoData) => {
+            videoUrl.value = videoData.videoUrl;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+});
+
+
+const deleteClick = () => {
+    deleteRecord(props.log.recordId)
+        .then(() => {
+            alert("삭제되었습니다");
+            getAllRecord(userStore.user.userId)
+            .then((data) => {
+                recordStore.records = data.slice(0, 17);
+            })
+            .catch((e) => {
+                console.log(e);
+            })
+    })
+}
 </script>
 
 <style scoped>
@@ -22,7 +63,7 @@
 }
 .info{
     width: 15%;
-    height: 33px;
+    height: 40px;
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -38,7 +79,7 @@
     width: 60%;
 }
 .button{
-    width: 7%;
+    width: 8%;
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -46,5 +87,8 @@
     justify-content: center;
     background-color: lightgray;
     color: #ffffffc8;
+}
+.button:hover{
+    cursor: pointer;
 }
 </style>

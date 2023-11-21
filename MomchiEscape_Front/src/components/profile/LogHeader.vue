@@ -22,7 +22,7 @@
 }
 .info{
     width: 15%;
-    height: 35px;
+    height: 40px;
     font-size: 15px;
     display: flex;
     align-items: center;
@@ -35,6 +35,6 @@
     width: 60%;
 }
 .button{
-    width: 7%;
+    width: 8%;
 }
 </style>

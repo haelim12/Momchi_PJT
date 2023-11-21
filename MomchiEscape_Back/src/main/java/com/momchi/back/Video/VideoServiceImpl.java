@@ -27,6 +27,9 @@ public class VideoServiceImpl {
         }
         return null;
     }
+    public Video getVideoById(Long videoId){
+        return videoRepository.getVideoById(videoId);
+    }
     public Video getPopularVideo(){
         return videoRepository.getPopularVideo();
     }

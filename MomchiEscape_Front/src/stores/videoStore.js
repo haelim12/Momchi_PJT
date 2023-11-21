@@ -3,5 +3,6 @@ import { defineStore } from "pinia";
 
 export const useVideoStore = defineStore("videoData", () => {
     const videos = ref([]);
-    return { videos };
+    const popularVideo = ref({});
+    return { videos, popularVideo };
 })

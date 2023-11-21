@@ -21,7 +21,14 @@
         order by date desc;
     </select>
 
-    <delete id="deleteById" parameterType="Long">
+    <select id="getRecordByDate" resultMap="RecordMap" parameterType="map">
+        SELECT *
+        FROM Record
+        WHERE user_id = #{userId} AND DATE_FORMAT(date, '%Y-%m') = #{date}
+        ORDER BY date ASC;
+    </select>
+
+    <delete id="deleteRecord" parameterType="Long">
         delete from Record
         where record_id = #{recordId};
     </delete>

@@ -28,6 +28,14 @@ public class RecordController {
     public ResponseEntity getAllRecord(@PathVariable Long userId){
         return new ResponseEntity(recordService.getAllRecord(userId), HttpStatus.OK);
     }
+    @GetMapping("/month")
+    public ResponseEntity getMonthlyRecord(@RequestParam String date, @RequestParam Long userId){
+        return new ResponseEntity(recordService.getRecordByDate(date,userId),HttpStatus.OK);
+    }
+    @GetMapping("/streak/month")
+    public ResponseEntity getMonthlyStreak(@RequestParam String date, @RequestParam Long userId){
+        return new ResponseEntity(recordService.mapToStreak(date,userId),HttpStatus.OK);
+    }
 
     @DeleteMapping("/{recordId}")
     public ResponseEntity deleteRecord(@PathVariable Long recordId){

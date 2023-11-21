@@ -5,7 +5,9 @@ export const useUserStore = defineStore("userData", () => {
     const user = computed(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
-  });
+    });
+  
+  const popularUsers = ref([]);
 
-  return { user };
+  return { user, popularUsers };
 })

@@ -177,7 +177,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 100px; 
+  padding-bottom: 100px;
   border-bottom: solid 2px rgb(224, 224, 224);
 }
 .video-player {

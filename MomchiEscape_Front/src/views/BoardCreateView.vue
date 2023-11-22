@@ -23,7 +23,8 @@
         <option
           v-for="(typeName, index) in type"
           :key="index"
-          :value="typeName">
+          :value="typeName"
+        >
           {{ typeName }}
         </option>
       </select>
@@ -41,7 +42,8 @@
         <option
           v-for="(typeName, index) in levelType"
           :key="index"
-          :value="typeName">
+          :value="typeName"
+        >
           {{ typeName }}
         </option>
       </select>
@@ -61,7 +63,7 @@ import { savePost } from "../util/PostApi";
 import { isValidYouTubeUrl } from "@/util/InputCheck";
 import TheHeaderNav from "../components/common/TheHeaderNav.vue";
 
-const type = ["후기", "영상 추천" , "honey팁"];
+const type = ["후기", "영상 추천", "honey팁"];
 const levelType = ["초보", "중수", "고수"];
 const title = ref({
   name: "제목 *",
@@ -101,8 +103,7 @@ const onTypeChange = (inputValue) => {
   selectedType.value = inputValue.target.value;
   if (selectedType.value === "영상 추천") {
     isUrlNeeded.value = true;
-  }
-  else {
+  } else {
     isUrlNeeded.value = false;
   }
 };
@@ -132,8 +133,8 @@ const create = () => {
     userId: user.userId,
     contentType: selectedType.value,
     url: urlValue.value,
-    level:level.value
-  }
+    level: level.value,
+  };
   savePost(post)
     .then(() => {
       alert("등록이 완료되었습니다");
@@ -141,16 +142,15 @@ const create = () => {
         router.push("/youtube").then(() => {
           window.location.reload();
         });
-      }
-      else {
-          router.push("/board").then(() => {
+      } else {
+        router.push("/board").then(() => {
           window.location.reload();
         });
       }
     })
     .catch((e) => {
       console.log(e);
-  })
+    });
 };
 
 function isValidInput() {
@@ -164,7 +164,7 @@ function isValidInput() {
       isUrlValid = false;
     }
   }
-  return (isTitleEmpty || isContentEmpty || isTypeEmpty || isUrlValid);
+  return isTitleEmpty || isContentEmpty || isTypeEmpty || isUrlValid;
 }
 </script>
 
@@ -249,7 +249,7 @@ div::-webkit-scrollbar {
 .blank {
   height: 20px;
 }
-.blank-bottom{
+.blank-bottom {
   height: 70px;
 }
 </style>

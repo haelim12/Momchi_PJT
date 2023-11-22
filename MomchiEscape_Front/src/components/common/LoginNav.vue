@@ -5,11 +5,13 @@
       <button class="button" @click="toRegist">Regist</button>
     </div>
     <div v-if="!isLoggedin" class="login-bar">
-      <div class="profile_name">{{ userStore.user.nickname }}님 반갑습니다람쥐</div>
-      <div class="nav-blank"></div> 
-      
-      <img class="img" :src="logo" @click="toProfile"/> 
-      <div class="nav-blank_1"></div> 
+      <div class="profile_name">
+        {{ userStore.user.nickname }} 님 반갑습니다람쥐
+      </div>
+      <div class="nav-blank"></div>
+
+      <img class="img" :src="logo" @click="toProfile" />
+      <div class="nav-blank_1"></div>
       <button class="button" @click="logout">Logout</button>
 
       <!-- <div class="dropdown">
@@ -37,8 +39,7 @@ const logo = "/images/profile_chichi.png";
 const isLoggedin = computed(() => {
   if (!userStore.user) {
     return true;
-  }
-  else {
+  } else {
     return false;
   }
 });
@@ -60,7 +61,7 @@ const logout = () => {
 
 const toProfile = () => {
   router.push("/profile");
-}
+};
 </script>
 
 <style scoped>
@@ -72,12 +73,12 @@ const toProfile = () => {
   justify-content: flex-end;
   align-items: center;
 }
-.img{
+.img {
   width: 35px;
   padding: 2px;
 }
-.img:hover{
-    cursor: pointer;
+.img:hover {
+  cursor: pointer;
 }
 .button {
   width: 65px;
@@ -94,14 +95,14 @@ const toProfile = () => {
   color: white;
   cursor: pointer;
 }
-.profile_name{
+.profile_name {
   font-size: 14px;
   color: rgb(67, 65, 65);
 }
-.nav-blank{
+.nav-blank {
   width: 10px;
 }
-.nav-blank_1{
+.nav-blank_1 {
   width: 5px;
 }
 </style>

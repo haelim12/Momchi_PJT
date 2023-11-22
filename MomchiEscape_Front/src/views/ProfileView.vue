@@ -1,46 +1,53 @@
 <template>
-    <TheHeaderNav /> 
-    <div class="main-container">
-      <div class="body-container">
-        <div class="profile-container">
-          <div class="profile-img">
-            <div class="profile-img-left">
-              <img class="img" :src="profile"/> </div>
-            <div class="profile-img-right">
-              <div class="profile_name"><strong>{{ userStore.user.nickname }}</strong> 님의 프로필</div>
-              <div class="streak-day">{{ streakMsg }} 일 째 운동중 .. 💢</div>
-              <div class = "edit-delete">
-                <div class="profile-edit" @click="toEdit">수정</div>
-                <div class="profile-delete" @click="toDelete">탈퇴</div>
-              </div>
+  <TheHeaderNav />
+  <div class="main-container">
+    <div class="body-container">
+      <div class="profile-container">
+        <div class="profile-img">
+          <div class="profile-img-left">
+            <img class="img" :src="profile" />
+          </div>
+          <div class="profile-img-right">
+            <div class="profile_name">
+              <strong>{{ userStore.user.nickname }}</strong> 님의 프로필
+            </div>
+            <div class="streak-day">{{ streakMsg }} 일 째 운동중 .. 💢</div>
+            <div class="edit-delete">
+              <div class="profile-edit" @click="toEdit">수정</div>
+              <div class="profile-delete" @click="toDelete">탈퇴</div>
             </div>
           </div>
-          <div class="streak-title">Streak</div>
-          <div class="streak-container">
-              <div class="streak-date">
-                  <div class="days">일</div>
-                  <div class="days">월</div>
-                  <div class="days">화</div>
-                  <div class="days">수</div>
-                  <div class="days">목</div>
-                  <div class="days">금</div>
-                  <div class="days">토</div>
-              </div>
-              <div class="profile-streak">
-                <div v-for="(monthDays, index) in daysInYear" :key="index">
-                  <Streak :monthDays="monthDays" :index="index" />
-                </div>
-              </div>
+        </div>
+        <div class="streak-title">Streak</div>
+        <div class="streak-container">
+          <div class="streak-date">
+            <div class="days">일</div>
+            <div class="days">월</div>
+            <div class="days">화</div>
+            <div class="days">수</div>
+            <div class="days">목</div>
+            <div class="days">금</div>
+            <div class="days">토</div>
           </div>
+          <div class="profile-streak">
+            <div v-for="(monthDays, index) in daysInYear" :key="index">
+              <Streak :monthDays="monthDays" :index="index" />
+            </div>
+          </div>
+        </div>
 
-          <div class="streak-title">Exercise-Log</div>
-          <div class="lower-container">
-            <LogHeader/>
-            <Log v-for="(log, index) in recordStore.records" :key="index" :log="log" />
-          </div>
+        <div class="streak-title">Exercise-Log</div>
+        <div class="lower-container">
+          <LogHeader />
+          <Log
+            v-for="(log, index) in recordStore.records"
+            :key="index"
+            :log="log"
+          />
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script setup>
@@ -62,17 +69,16 @@ const profile = "/images/profile_chichi_body.png";
 const currentStreak = ref(0);
 
 const streakMsg = computed(() => {
-  if (currentStreak.value <10) {
+  if (currentStreak.value < 10) {
     return "0" + currentStreak.value;
-  }
-  else {
+  } else {
     return currentStreak.value;
   }
-})
+});
 
 const toEdit = () => {
   router.push("/profile-edit");
-}
+};
 
 const toDelete = () => {
   deleteAccount(userStore.user.userId)
@@ -84,8 +90,8 @@ const toDelete = () => {
     })
     .catch((e) => {
       console.log(e);
-  })
-}
+    });
+};
 
 const daysInYear = ref([]);
 
@@ -105,8 +111,8 @@ onMounted(() => {
     })
     .catch((e) => {
       console.log(e);
-    })
-})
+    });
+});
 
 const getAllDaysInYear = () => {
   const today = new Date();
@@ -115,7 +121,10 @@ const getAllDaysInYear = () => {
 
   for (let month = 1; month <= 12; month++) {
     const daysInMonth = new Date(year, month, 0).getDate();
-    const daysArray = Array.from({ length: daysInMonth }, (_, index) => index + 1);
+    const daysArray = Array.from(
+      { length: daysInMonth },
+      (_, index) => index + 1
+    );
     daysInYear.value.push(daysArray);
   }
 };
@@ -125,12 +134,12 @@ const getAllDaysInYear = () => {
 * {
   box-sizing: border-box;
 }
-.main-container{
+.main-container {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-.title-container{
+.title-container {
   display: flex;
   align-items: center;
   height: 40px;
@@ -138,7 +147,6 @@ const getAllDaysInYear = () => {
   margin-bottom: 20px;
   margin-right: 10px;
   justify-content: space-between;
-  
 }
 .body-container {
   width: 100%;
@@ -176,8 +184,8 @@ const getAllDaysInYear = () => {
 }
 
 .profile-name {
-  font-size : 18px;
-  padding:3px;
+  font-size: 18px;
+  padding: 3px;
 }
 .streak-day {
   font-size: 40px;
@@ -210,10 +218,10 @@ const getAllDaysInYear = () => {
 }
 
 /* Profile Streak */
-.streak-container{
+.streak-container {
   display: flex;
 }
-.streak-date{
+.streak-date {
   padding-top: 40px;
   padding-bottom: 33px;
   padding-right: 1px;
@@ -226,19 +234,19 @@ const getAllDaysInYear = () => {
   height: 200px;
   color: #333333a4;
 }
-.days{
+.days {
   font-size: 7px;
 }
-.lower-container{
+.lower-container {
   margin-top: 20px;
 }
-.streak-title{
-font-size: 16px;
-margin-top: 20px;
-padding-left: 5px;
-color: #333333c8;
+.streak-title {
+  font-size: 16px;
+  margin-top: 20px;
+  padding-left: 5px;
+  color: #333333c8;
 }
-.profile-streak{
+.profile-streak {
   height: 200px;
   display: flex;
   align-items: center;

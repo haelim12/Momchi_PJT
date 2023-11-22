@@ -1,25 +1,31 @@
 <template>
-    <TheHeaderNav />
-    <div class="body-container">
-      <div class="title-container">
-          <div class="title">운동 기록</div>
-      </div>
-      <div class="main-container">
-          <iframe
-            class="video-player"
-            :src="video.videoUrl"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
-          <div class="stopwatch">{{ formattedTime }}</div>
-          <div class="button-container">
-              <button class="exercise-button" @click="startStopwatch">시작하기 </button>
-              <button class="exercise-button" @click="pauseStopwatch">잠깐 쉬기 ... </button>
-              <button class="exercise-button" @click="stopStopwatch">이제 운동 그만 ⚰️</button>
-          </div>
+  <TheHeaderNav />
+  <div class="body-container">
+    <div class="title-container">
+      <div class="title">운동 기록</div>
+    </div>
+    <div class="main-container">
+      <iframe
+        class="video-player"
+        :src="video.videoUrl"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+      <div class="stopwatch">{{ formattedTime }}</div>
+      <div class="button-container">
+        <button class="exercise-button" @click="startStopwatch">
+          시작하기
+        </button>
+        <button class="exercise-button" @click="pauseStopwatch">
+          잠깐 쉬기 ...
+        </button>
+        <button class="exercise-button" @click="stopStopwatch">
+          이제 운동 그만 ⚰️
+        </button>
       </div>
     </div>
+  </div>
 </template>
 
 <script setup>
@@ -31,58 +37,63 @@ import { useUserStore } from "@/stores/userStore";
 
 const router = useRouter();
 const video = computed(() => {
-    return JSON.parse(localStorage.getItem("video"));
-})
+  return JSON.parse(localStorage.getItem("video"));
+});
 const userStore = useUserStore();
 const elapsedSeconds = ref(0);
 const intervalId = ref(null);
 const isPaused = ref(true);
 
 const formattedTime = computed(() => {
-    const minutes = Math.floor(elapsedSeconds.value / 60);
-    const seconds = elapsedSeconds.value % 60;
-    const hours = Math.floor(elapsedSeconds.value / 3600);
-  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  const minutes = Math.floor(elapsedSeconds.value / 60);
+  const seconds = elapsedSeconds.value % 60;
+  const hours = Math.floor(elapsedSeconds.value / 3600);
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}:${String(seconds).padStart(2, "0")}`;
 });
 
 const startStopwatch = () => {
-    if (isPaused.value) {
-          intervalId.value = setInterval(() => {
-            elapsedSeconds.value += 1;
-          }, 1000);
-        isPaused.value = false;
-    }
+  if (isPaused.value) {
+    intervalId.value = setInterval(() => {
+      elapsedSeconds.value += 1;
+    }, 1000);
+    isPaused.value = false;
+  }
 };
 
 const pauseStopwatch = () => {
-    isPaused.value = true;
-    clearInterval(intervalId.value);
+  isPaused.value = true;
+  clearInterval(intervalId.value);
 };
 
 const stopStopwatch = () => {
-    pauseStopwatch();
-    
-    const user = userStore.user;
-    const date = new Date();
-    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  pauseStopwatch();
 
-    const record = {
-        userId: user.userId,
-        date: formattedDate,
-        time: formattedTime.value,
-        videoId: video.value.videoId
-    };
+  const user = userStore.user;
+  const date = new Date();
+  const formattedDate = `${date.getFullYear()}-${String(
+    date.getMonth() + 1
+  ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
-    registRecordApi(record)
-        .then(() => {
-            alert("오늘 운동 끝 !");
-            router.push("/youtube").then(() => {
-                window.location.reload();
-            });
-        })
-        .catch((e) => {
-            console.log(e);
-         })
+  const record = {
+    userId: user.userId,
+    date: formattedDate,
+    time: formattedTime.value,
+    videoId: video.value.videoId,
+  };
+
+  registRecordApi(record)
+    .then(() => {
+      alert("오늘 운동 끝 !");
+      router.push("/youtube").then(() => {
+        window.location.reload();
+      });
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 };
 
 // 컴포넌트가 소멸될 때 setInterval 정리
@@ -104,7 +115,7 @@ onUnmounted(() => {
   box-sizing: border-box;
   /* background-color: yellow; */
 }
-.title-container{
+.title-container {
   display: flex;
   align-items: center;
   height: 40px;
@@ -129,7 +140,7 @@ onUnmounted(() => {
   border-radius: 5px;
   margin-bottom: 60px;
 }
-.button-container{
+.button-container {
   margin-top: 60px;
   width: 100%;
   display: flex;
@@ -143,21 +154,20 @@ onUnmounted(() => {
   border-radius: 5px;
   font-size: 14px;
 }
-.exercise-button:hover{
+.exercise-button:hover {
   cursor: pointer;
-    background-color: #fce8f0;
+  background-color: #fce8f0;
 }
 .stopwatch {
-    width : 350px;
-    height : 80px;
-    padding-top: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid gray;
-    color: #333333d3;
-    border-radius: 10px;
-    font-size: 60px;
+  width: 350px;
+  height: 80px;
+  padding-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid gray;
+  color: #333333d3;
+  border-radius: 10px;
+  font-size: 60px;
 }
-
 </style>

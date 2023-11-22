@@ -1,3 +1,7 @@
+drop database banapresso;
+create database banapresso;
+use banapresso;
+
 create table User (
                       user_id int auto_increment primary key ,
                       name varchar(100) not null,
@@ -5,6 +9,7 @@ create table User (
                       password varchar(200) not null,
                       nickname varchar(100) not null,
                       birthday date null,
+                      enabled boolean not null default true,
                       level varchar(100)
 );
 
@@ -33,4 +38,14 @@ create table PostLike (
                           post_id int not null,
                           foreign key (user_id) references User(user_id),
                           foreign key (post_id) references Post(post_id)
+);
+
+create table Record (
+                        record_id int auto_increment primary key ,
+                        user_id int not null ,
+                        date date not null ,
+                        time varchar(200) not null ,
+                        video_id int not null ,
+                        foreign key (user_id) references User(user_id),
+                        foreign key (video_id) references Video(video_id)
 );

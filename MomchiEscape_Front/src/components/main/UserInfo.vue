@@ -38,13 +38,15 @@ const streakMsg = computed(() => {
 })
 
 onMounted(() => {
+  if (userStore.user) {
     getStreak(userStore.user.userId)
-    .then((data) => {
-      currentStreak.value = data;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+      .then((data) => {
+        currentStreak.value = data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 })
 
 const isLoggedin = computed(() => {

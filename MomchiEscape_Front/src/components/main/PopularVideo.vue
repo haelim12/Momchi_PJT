@@ -1,24 +1,28 @@
 <template>
   <div class="main-container">
     <div class="title">
-      인기 동영상
+      가장 많이 시청 중인 동영상
     </div>
-    <iframe class="youtube" src="https://www.youtube.com/embed/9bKCi4qwwIk?si=3vOfQtJFCooNCXpZ" title="YouTube video player" controls="2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe class="youtube" :src=videoStore.popularVideo.videoUrl title="YouTube video player" controls="2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     <div class="info">
-        <div class="video-title">제목 : {{ popularVideo.title }}</div>
-        <div class="video-content">부위 : {{ popularVideo.part }}</div>
+        <div class="video-title">난이도 : {{ videoStore.popularVideo.level }}용</div>
+        <div class="video-content">함께 따라하며 운동해봐요 !</div>
     </div>  
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { useVideoStore } from "@/stores/videoStore";
+import { getPopularVideo } from "@/util/VideoApi";
 
-const popularVideo = ref({ title: "지구본", part: "이따구로 살지 마시오 근데 이거 노래 좋아 ", url: "https://www.youtube.com/watch?v=L39bRZMCuoM" });
+const videoStore = useVideoStore();
 
 onMounted(() => {
-  // 맨 처음 로딩될 때 동영상을 가져오는 함수 필요
-  // 가져오는 api 해야 할듯?
+  getPopularVideo()
+    .then((data) => {
+      videoStore.popularVideo = data;
+  })
 })
 
 </script>
@@ -39,6 +43,7 @@ onMounted(() => {
   font-size: 20px;
   padding-top: 10px;
   padding-left: 5px;
+  margin-bottom: 10px;
 }
 .youtube{
   width:99%;

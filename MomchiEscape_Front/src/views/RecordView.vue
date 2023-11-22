@@ -25,6 +25,29 @@
         </button>
       </div>
     </div>
+
+    <div class="comments-container">
+      <div class="comments-title">설레는 댓글창 열기</div>
+      <div class="comments-body">
+        <input
+          class="comment-input"
+          v-model="newComment"
+          type="text"
+          placeholder="댓글을 입력하세요"
+        />
+        <button class="comment-button" @click="addComment">댓글 작성</button>
+        <!-- Display existing comments (if any) -->
+        <div
+          class="comments-list"
+          v-for="(comment, index) in comments"
+          :key="index"
+        >
+          작성자 : <strong>{{ writerUser.nickname }}</strong
+          ><br />
+          내용 : {{ comment }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -43,6 +66,8 @@ const userStore = useUserStore();
 const elapsedSeconds = ref(0);
 const intervalId = ref(null);
 const isPaused = ref(true);
+
+const writerUser = ref("");
 
 const formattedTime = computed(() => {
   const minutes = Math.floor(elapsedSeconds.value / 60);
@@ -100,6 +125,26 @@ const stopStopwatch = () => {
 onUnmounted(() => {
   clearInterval(intervalId.value);
 });
+
+// 댓글
+const newComment = ref("");
+const comments = ref([]);
+
+const addComment = () => {
+  if (newComment.value.trim() !== "") {
+    comments.value.push(newComment.value);
+    saveComment();
+    newComment.value = "";
+  }
+};
+
+const saveComment = () => {
+  localStorage.setItem("comments", JSON.stringify(comments.value));
+};
+
+onMounted(() => {
+  const storedComments = localStorage.getItem("comments");
+});
 </script>
 
 <style scoped>
@@ -108,10 +153,10 @@ onUnmounted(() => {
 }
 .body-container {
   width: 100%;
-  height: 120vh;
   padding-top: 30px;
   padding-left: 6%;
   padding-right: 6%;
+  margin-bottom: 100px; /* 그만*/
   box-sizing: border-box;
   /* background-color: yellow; */
 }
@@ -128,14 +173,17 @@ onUnmounted(() => {
 }
 .main-container {
   width: 100%;
-  height: 120vh;
   padding-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 100px;
+  border-bottom: solid 2px rgb(224, 224, 224);
 }
 .video-player {
-  width: 100%;
+  width: 60%;
+  min-width: 700px;
+  max-width: 1200;
   aspect-ratio: 16/9;
   border-radius: 5px;
   margin-bottom: 60px;
@@ -169,5 +217,65 @@ onUnmounted(() => {
   color: #333333d3;
   border-radius: 10px;
   font-size: 60px;
+}
+
+.comments-container {
+  width: 100%;
+  min-height: 400px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(199, 199, 199, 0.254);
+}
+
+.comments-title {
+  padding-top: 10px;
+  font-size: 25px;
+  color: #333333db;
+}
+
+.comments-body {
+  padding-top: 50px;
+}
+
+.comment-input {
+  width: 340px;
+  height: 40px;
+  padding-left: 10px;
+  font-size: 12px;
+  font: #999999;
+  border: solid #999999 1px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.comment-field {
+  height: 40px;
+  padding: 5px;
+  border: 1px solid #a4a4a4;
+  border-radius: 5px;
+  background-color: crimson;
+}
+
+.comment-button {
+  height: 40px;
+  margin-left: 10px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #cbcbcb;
+  color: white;
+}
+
+.comment-button:hover {
+  background-color: #fce8f0;
+  color: #333333b9;
+  cursor: pointer;
+}
+
+.comments-list {
+  padding: 15px;
+  border-bottom: dashed 1px rgb(236, 236, 236);
 }
 </style>

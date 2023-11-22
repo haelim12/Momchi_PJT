@@ -1,31 +1,46 @@
 <template>
-    <div class="streak-container">
-        <div class="month-title">{{ index+1 }}월</div>
-        <div class="grass-container">
-            <div v-for="(week, weekIndex) in weeks" :key="weekIndex" class="week">
-                <div v-for="(day, dayIndex) in week" :key="dayIndex" class="square" 
-                :style="{ backgroundColor: record[weekIndex][dayIndex] === 1 ? '#E5E5E5' : 'white'}"></div>
-            </div>
+    <div class="month-title">{{ index+1 }}월</div>
+    <div class="grass-container">
+        <div v-for="(week, weekIndex) in weeks" :key="weekIndex" class="week">
+            <div v-for="(day, dayIndex) in week" :key="dayIndex" class="square" 
+            :style="{ backgroundColor: record[weekIndex][dayIndex] === 1 ? '#E5E5E5' : 'white'}"></div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { getMontlyStreak } from '@/util/RecordApi';
+import { useUserStore } from "@/stores/userStore";
 
 const props = defineProps(["monthDays", "index"]);
+const userStore = useUserStore();
+
+const dayString = computed(() => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    return `${currentYear}-${props.index+1}`;
+})
+
 const days = ref([]);
 const weeks = ref([]);
-const record = ref([[0, 1, 0, 0, 1, 1, 1],
-                    [0, 1, 0, 1, 1, 1, 0],
-                    [0, 0, 0, 0, 1, 1, 1],
-                    [1, 1, 0, 0, 0, 0, 1],
-                    [0, 0, 1, 1, 1, 1, 1],
-                    [1, 1, 0, 0, 1, 1, 0]]);
+const record = ref([[0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]]);
 
 onMounted(() => {
     getDays();
     splitIntoWeeks();
+    getMontlyStreak(dayString.value, userStore.user.userId)
+        .then((data) => {
+            record.value = data;
+        })
+        .catch((e) => {
+            console.log(e);
+    })
 })
 
 function getDays() {
@@ -62,9 +77,6 @@ function splitIntoWeeks() {
 </script>
 
 <style scoped>
-.streak-container{
-
-}
 .month-title{
     font-size: 13px;
     color: #333333c4;

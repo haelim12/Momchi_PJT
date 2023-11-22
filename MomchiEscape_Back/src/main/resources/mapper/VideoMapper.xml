@@ -15,12 +15,14 @@
     </insert>
 
     <select id="getAllVideos" resultMap="VideoMap">
-        select * from Video;
+        select * from Video
+        order by view_cnt desc;
     </select>
 
     <select id="getByLevel" resultMap="VideoMap" parameterType="String">
         select * from Video
         where level=#{level}
+        order by view_cnt desc;
     </select>
 
     <select id="getPopularVideo" resultMap="VideoMap">

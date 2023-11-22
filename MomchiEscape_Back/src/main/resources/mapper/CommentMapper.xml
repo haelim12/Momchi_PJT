@@ -16,7 +16,8 @@
 
     <select id="getCommentByPostId" resultMap="CommentMap" parameterType="Long">
         select * from Comment
-        where video_id = #{videoId};
+        where video_id = #{videoId}
+        order by comment_id desc;
     </select>
 
     <update id="updateComment" parameterType="com.momchi.back.Comment.Comment">

@@ -14,8 +14,8 @@
     </resultMap>
 
     <insert id="save" parameterType="com.momchi.back.User.User">
-        insert into User
-        values (#{userId}, #{name}, #{email}, #{password}, #{nickname}, #{birthday}, #{level})
+        insert into User (name, email, password, nickname, birthday, level)
+        values ( #{name}, #{email}, #{password}, #{nickname}, #{birthday}, #{level})
     </insert>
 
 

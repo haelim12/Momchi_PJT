@@ -19,7 +19,8 @@
     </insert>
 
     <select id="getAllPosts" resultMap="PostMap">
-        select * from Post;
+        select * from Post
+        order by post_id desc;
     </select>
 
     <select id="findById" resultMap="PostMap" parameterType="Long">
@@ -39,7 +40,8 @@
 
     <select id="findByCategory" resultMap="PostMap" parameterType="String">
         select * from Post
-        where content_type = #{contentType};
+        where content_type = #{contentType}
+        order by post_id desc;
     </select>
 
     <update id="update" parameterType="com.momchi.back.Post.Post">

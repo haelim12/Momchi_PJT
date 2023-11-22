@@ -36,7 +36,7 @@
         :placeholder="url.placeholder"
         @send-data="urlInput"
       />
-      <div class="name">난이도</div>
+      <div v-show="isUrlNeeded" class="name">난이도</div>
       <select v-show="isUrlNeeded" v-model="level" class="select">
         <option value="" disabled selected>선택</option>
         <option

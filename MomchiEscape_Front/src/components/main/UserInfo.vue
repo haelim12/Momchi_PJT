@@ -1,21 +1,21 @@
 <template>
   <div class="main-container">
-    <div v-if="!isLoggedin" >
-      <div class="title">{{ userStore.user.nickname }}님, 오늘도 좋은 운동 되세요.</div>
+    <div v-if="!isLoggedin">
+      <div class="title">
+        {{ userStore.user.nickname }} 님, 오늘도 좋은 운동 되세요.
+      </div>
       <div class="content-container">
-        <div class="info"> 현재까지 스트릭은 {{ streakMsg }}일 입니다</div>
-        <div class="encouragement"> 오늘도 몸치탈출 화이팅!</div>
+        <div class="info">현재까지 스트릭은 {{ streakMsg }} 일 입니다</div>
+        <div class="encouragement">오늘도 몸치 탈출 화이팅 !</div>
       </div>
     </div>
-    <div v-if="isLoggedin" >
-        <div class="title">운동이.. 설마... 처음이신가요....? ;;</div>
-        <div class="content-container">
-          <div class="info toregist" @click="toRegist">
-            회원가입 해보시는건?
-          </div>
-          <div class="encouragement"> 날씨만 보고 도망가시네요</div>
-        </div>
+    <div v-if="isLoggedin">
+      <div class="title">운동이.. 설마... 처음이신가요....? ;;</div>
+      <div class="content-container">
+        <div class="info toregist" @click="toRegist">회원가입 해보시는건?</div>
+        <div class="encouragement">날씨만 보고 도망가시네요</div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -31,11 +31,10 @@ const currentStreak = ref(0);
 const streakMsg = computed(() => {
   if (currentStreak.value < 10) {
     return "0" + currentStreak.value;
-  }
-  else {
+  } else {
     return currentStreak.value;
   }
-})
+});
 
 onMounted(() => {
   if (userStore.user) {
@@ -47,25 +46,23 @@ onMounted(() => {
         console.log(e);
       });
   }
-})
+});
 
 const isLoggedin = computed(() => {
   if (!userStore.user) {
     return true;
-  }
-  else {
+  } else {
     return false;
   }
 });
 
 const toRegist = () => {
   router.push("/regist");
-}
-
+};
 </script>
 
 <style scoped>
-*{
+* {
   box-sizing: border-box;
   color: #565959;
 }
@@ -75,30 +72,30 @@ const toRegist = () => {
   padding-left: 10px;
   /* background-color: crimson; */
 }
-.title{
+.title {
   font-size: 25px;
   font-weight: bold;
   height: 50px;
-
 }
-.content-container{
+.content-container {
   width: 90%;
   height: 70%;
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+  margin-left: 15px;
 }
-.info{
+.info {
   font-size: 20px;
   padding-bottom: 15px;
   width: 300px;
   color: #ffc2cd;
 }
-.toregist{
+.toregist {
   width: 170px;
   cursor: pointer;
 }
-.encouragement{
+.encouragement {
   font-size: 15px;
 }
 </style>

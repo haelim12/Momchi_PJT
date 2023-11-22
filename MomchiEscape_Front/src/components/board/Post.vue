@@ -5,7 +5,7 @@
     </div>
     <div class="content">
       {{ post.content }}
-      <div v-if="userStore.user.userId === props.post.userId" class="edit-delete">
+      <div v-if="isLoggedIn" class="edit-delete">
         <div class="edit-button" @click="postEdit">수정</div>
         <div class="delete-button" @click="postDelete">삭제</div>
       </div>
@@ -35,6 +35,7 @@ const liking = "/images/like.png";
 const unliking = "/images/unlike.png";
 const logo = "/images/profile_chichi.png";
 const likeCheck = ref(false);
+const isLoggedIn = ref(false);
 
 const likeImg = computed(() => {
   if (likeCheck.value) {
@@ -52,6 +53,9 @@ const props = defineProps({
 });
 
 onMounted(() => {
+  if (userStore.user && userStore.user.userId === props.post.userId) {
+    isLoggedIn.value = true;
+  }
   getUserPost();
 });
 
@@ -93,21 +97,22 @@ async function checkLikePost() {
 const postEdit = () => {
   postStore.editingPost = props.post;
   router.push("/post-edit");
-}
+};
 
 const postDelete = () => {
-  deletePost(props.post.postId)
-    .then(() => {
-      alert("삭제되었습니다");
-      window.location.reload();
-    })
-}
+  deletePost(props.post.postId).then(() => {
+    alert("삭제되었습니다");
+    window.location.reload();
+  });
+};
 </script>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
 .main-container {
-  height: 100%;
-  aspect-ratio: 0.9;
+  width: 250px;
   margin-right: 20px;
   display: flex;
   flex-direction: column;
@@ -115,8 +120,9 @@ const postDelete = () => {
   /* background-color: brown; */
 }
 .title {
-  height: 45px;
-  font-size: 18px;
+  width: 100%;
+  height: 30px;
+  font-size: 14px;
   padding-left: 10px;
   margin-bottom: 5px;
   color: #333333;
@@ -127,18 +133,20 @@ const postDelete = () => {
 }
 
 .content {
-  height: 100%;
+  width: 100%;
+  height: 170px;
   margin-top: 5px;
   padding-top: 10px;
   padding-right: 10px;
   padding-left: 10px;
-  font-size: 15px;
+  font-size: 13px;
   color: #333333db;
   border: 1px solid rgb(220, 220, 220);
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  line-height: 22px;
   /* background-color: beige; */
 }
 
@@ -161,16 +169,17 @@ const postDelete = () => {
   color: #333333b9;
 }
 .edit-button {
-  padding-right:4px;
+  padding-right: 4px;
 }
 .under-nav {
-  margin-top: 10px;
+  width: 100%;
+  margin-top: 5px;
   height: 30px;
   display: flex;
   padding-right: 10px;
   padding-left: 10px;
-  margin-bottom: 10px;
-  font-size: 15px;
+  margin-bottom: 5px;
+  font-size: 12px;
   color: #333333db;
   justify-content: space-between;
   align-items: center;

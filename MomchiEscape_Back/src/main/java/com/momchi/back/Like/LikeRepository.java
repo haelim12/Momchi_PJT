@@ -8,4 +8,5 @@ public interface LikeRepository {
     Long findByUserAndPost(Like like);
     void saveLike(Like like);
     void unLike(Long likeId);
+    void deleteByPostId(Long postId);
 }

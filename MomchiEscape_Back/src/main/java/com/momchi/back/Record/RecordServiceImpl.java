@@ -67,7 +67,7 @@ public class RecordServiceImpl {
         int week = 0;
         while (day<=lengthOfMonth){
             if(day == 1 && dayOfWeek>0){
-                temp.add(0);
+                temp.add(-1);
                 dayOfWeek--;
             }
             else {
@@ -86,11 +86,9 @@ public class RecordServiceImpl {
             }
             week++;
         }
-
         while (monthly.get(monthly.size()-1).size() <7){
-            monthly.get(monthly.size()-1).add(0);
+            monthly.get(monthly.size()-1).add(-1);
         }
-
         return monthly;
     }
     private boolean checkRecord(int day, List<Record> records){

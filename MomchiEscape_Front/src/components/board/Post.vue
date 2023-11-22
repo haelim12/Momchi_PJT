@@ -5,9 +5,12 @@
     </div>
     <div class="content">
       {{ post.content }}
+      <div v-if="userStore.user.userId === props.post.userId" class="edit-delete">
+        <div class="edit-button" @click="postEdit">수정</div>
+        <div class="delete-button" @click="postDelete">삭제</div>
+      </div>
     </div>
     <div class="under-nav">
-      <!-- <img class="img" :src="logo"/>  -->
       <div>Written by : {{ writerUser.nickname }}</div>
       <img class="like_img" :src="likeImg" @click="onLikeClick" />
     </div>
@@ -19,8 +22,13 @@ import { computed, onMounted, ref } from "vue";
 import { getUserInfo } from "@/util/UserApi";
 import { checkLike, likeApi } from "@/util/LikeApi";
 import { useUserStore } from "@/stores/userStore";
+import { deletePost } from "@/util/PostApi";
+import { usePostStore } from "@/stores/postStore";
+import { useRouter } from "vue-router";
 
 const userStore = useUserStore();
+const postStore = usePostStore();
+const router = useRouter();
 
 const writerUser = ref("");
 const liking = "/images/like.png";
@@ -81,6 +89,19 @@ async function checkLikePost() {
     }
   }
 }
+
+const postEdit = () => {
+  postStore.editingPost = props.post;
+  router.push("/post-edit");
+}
+
+const postDelete = () => {
+  deletePost(props.post.postId)
+    .then(() => {
+      alert("삭제되었습니다");
+      window.location.reload();
+    })
+}
 </script>
 
 <style scoped>
@@ -115,7 +136,32 @@ async function checkLikePost() {
   color: #333333db;
   border: 1px solid rgb(220, 220, 220);
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   /* background-color: beige; */
+}
+
+.edit-delete {
+  display: flex;
+  font-size: 8px;
+  color: lightgray;
+  justify-content: flex-end;
+  padding-bottom: 8px;
+  padding-right: 3px;
+}
+
+.edit-button:hover {
+  cursor: pointer;
+  color: #333333b9;
+}
+
+.delete-button:hover {
+  cursor: pointer;
+  color: #333333b9;
+}
+.edit-button {
+  padding-right:4px;
 }
 .under-nav {
   margin-top: 10px;

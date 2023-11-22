@@ -16,8 +16,6 @@ public interface UserRepository {
     List<User> getUserByRecord();
     // Update
     void update(User user);
-
     // Delete
     void deleteById(Long userId);
-
 }

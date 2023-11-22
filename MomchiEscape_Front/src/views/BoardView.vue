@@ -3,7 +3,7 @@
     <TheHeaderNav />
     <div class="body-container">
       <div class="title-container">
-          <div class="title">Board</div>
+          <div class="title">게시판</div>
           <button v-if="isLoggedIn" class="button" @click="toCreate">글 작성</button>
       </div>
       <div class="contents-container">

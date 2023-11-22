@@ -2,8 +2,24 @@
     <div class="month-title">{{ index+1 }}월</div>
     <div class="grass-container">
         <div v-for="(week, weekIndex) in weeks" :key="weekIndex" class="week">
-            <div v-for="(day, dayIndex) in week" :key="dayIndex" class="square" 
-            :style="{ backgroundColor: record[weekIndex][dayIndex] === 1 ? '#E5E5E5' : 'white'}"></div>
+            <div
+            v-for="(day, dayIndex) in week"
+            :key="dayIndex"
+            class="square"
+            :style="{
+                backgroundColor:
+                    record[weekIndex][dayIndex] === 1
+                        ? '#D9D9D9'
+                        : record[weekIndex][dayIndex] === 0
+                            ? 'white'
+                            : '#white',
+                border:
+                    record[weekIndex][dayIndex] === 1
+                        ? 'solid 1px #D9D9D9'
+                        : record[weekIndex][dayIndex] === 0
+                            ? 'solid 1px #D9D9D9'
+                            : '1px dotted #e9e9e9'}"
+          > </div>
         </div>
     </div>
 </template>
@@ -96,8 +112,15 @@ function splitIntoWeeks() {
 .square {
   width: 15px; 
   height: 15px;
-  border: solid 1px #e9e9e9;
   margin: 1px;
   border-radius: 4px;
+  border: solid 1px white;
+}
+.full_square{
+      border: solid 1px #e9e9e9;
+      background-color: #E5E5E5;
+}
+.empty_square{
+  border: solid 1px #e9e9e9;
 }
 </style>

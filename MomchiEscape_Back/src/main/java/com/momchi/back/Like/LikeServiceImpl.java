@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LikeServicImpl {
+public class LikeServiceImpl {
     private final LikeRepository likeRepository;
 
     public boolean checkLike(Long userId, Long postId){
@@ -21,5 +21,8 @@ public class LikeServicImpl {
         else {
             likeRepository.unLike(findByUserAndPost(like));
         }
+    }
+    public void deleteByPostId(Long postId){
+        likeRepository.deleteByPostId(postId);
     }
 }

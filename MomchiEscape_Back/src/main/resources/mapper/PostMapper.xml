@@ -44,12 +44,12 @@
 
     <update id="update" parameterType="com.momchi.back.Post.Post">
         update Post
-        set title=#{title}, content=#{content}, url=#{url}
+        set title=#{title}, content=#{content}
         where post_id = #{postId};
     </update>
 
     <delete id="deleteById" parameterType="Long">
         delete from Post
-        where like_id = #{likeId};
+        where post_id = #{postId};
     </delete>
 </mapper>

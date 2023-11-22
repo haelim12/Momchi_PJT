@@ -50,6 +50,17 @@ function getPopularUser() {
     })
   })
 }
+function deleteAccount(userId) {
+    return new Promise((resolve, reject) => {
+    axios.delete(`${API_URL}/user/${userId}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((e) => {
+        reject(e);
+    })
+  })
+}
 
 
-export { registApi, loginApi, getUserInfo, getPopularUser };
+export { registApi, loginApi, getUserInfo, getPopularUser,deleteAccount };

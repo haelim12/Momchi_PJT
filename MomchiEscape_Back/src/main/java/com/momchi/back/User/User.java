@@ -17,4 +17,5 @@ public class User {
     private String nickname;
     private LocalDate birthday;
     private String level;
+    private boolean enabled;
 }

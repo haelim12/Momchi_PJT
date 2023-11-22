@@ -27,25 +27,43 @@
     </div>
 
     <div class="comments-container">
-      <div class="comments-title">설레는 댓글창 열기</div>
-      <div class="comments-body">
-        <input
-          class="comment-input"
-          v-model="newComment"
-          type="text"
-          placeholder="댓글을 입력하세요"
-        />
-        <button class="comment-button" @click="addComment">댓글 작성</button>
-        <!-- Display existing comments (if any) -->
-        <div
-          class="comments-list"
-          v-for="(comment, index) in comments"
-          :key="index"
-        >
-          작성자 : <strong>{{ writerUser.nickname }}</strong
-          ><br />
-          내용 : {{ comment }}
+      <div v-show="!isCommentVis" class="comments-title" @click="showComments">설레는 댓글창 열기</div>
+      <div v-show="isCommentVis" class="comments-title" @click="showComments">설레는 댓글창 닫기</div>
+      <div v-show="isCommentVis" class="comments-body">
+        <div>
+          <input
+            class="comment-input"
+            v-model="newComment"
+            type="text"
+            placeholder="댓글을 입력하세요"
+          />
+          <button class="comment-button" @click="addComment">댓글 작성</button>
         </div>
+        <div v-show="isCommentFixing">
+            <input
+              class="comment-input"
+              v-model="commentEdit.content"
+              type="text"
+            />
+            <button class="comment-edit-button" @click="finishEditComment">댓글 수정</button>
+        </div>
+        <div class="comment-box">
+        <div
+            class="comments-list"
+            v-for="(comment, index) in comments"
+            :key="index"
+            >
+            <div class="comment-text">
+                <div class="comment-list-writer">{{ comment.nickname }} &nbsp|</div>
+                <div class="comment-list-content">&nbsp&nbsp {{ comment.content }}</div>
+            </div>
+            <div class="edit-delete">
+              <div class="edit-button" @click="editCommentOnclick(comment)">수정</div>
+              <div class="delete-button" @click="commentDelete(comment.commentId)">삭제</div>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -57,6 +75,7 @@ import { useRouter } from "vue-router";
 import { computed, onMounted, ref, onUnmounted } from "vue";
 import { registRecordApi } from "@/util/RecordApi.js";
 import { useUserStore } from "@/stores/userStore";
+import { saveComment, getCommentByPostId, updateComment, deleteComment } from "@/util/CommentApi.js";
 
 const router = useRouter();
 const video = computed(() => {
@@ -66,7 +85,6 @@ const userStore = useUserStore();
 const elapsedSeconds = ref(0);
 const intervalId = ref(null);
 const isPaused = ref(true);
-
 const writerUser = ref("");
 
 const formattedTime = computed(() => {
@@ -126,25 +144,69 @@ onUnmounted(() => {
   clearInterval(intervalId.value);
 });
 
-// 댓글
+// 댓글 -----------------------------------------
 const newComment = ref("");
 const comments = ref([]);
+const isCommentVis = ref(false);
+const isCommentFixing = ref(false);
+const commentEdit = ref({});
+
+function showComments() {
+  isCommentVis.value = !isCommentVis.value;
+  getComments();
+} 
+
+function commentDelete(commentId) {
+  deleteComment(commentId)
+    .then(() => {
+      getComments();
+    })
+}
+
+function editCommentOnclick(comment) {
+  commentEdit.value = comment;
+  isCommentFixing.value = true;
+}
+function finishEditComment() {
+  updateComment(commentEdit.value)
+    .then(() => {
+      getComments();
+  })
+  isCommentFixing.value = false;
+}
+
+const getComments = () => {
+  getCommentByPostId(video.value.videoId)
+    .then((data) => {
+      comments.value = data;
+    })
+    .catch((e) => {
+      console.log(e);
+  })
+}
 
 const addComment = () => {
   if (newComment.value.trim() !== "") {
-    comments.value.push(newComment.value);
-    saveComment();
-    newComment.value = "";
+    const user = userStore.user;
+    const comment = {
+      userId: user.userId,
+      videoId: video.value.videoId,
+      content: newComment.value
+    }
+    saveComment(comment)
+      .then(() => {
+        getComments();
+        newComment.value = "";
+      })
+      .catch((e) => {
+        console.log(e);
+    })
   }
 };
 
-const saveComment = () => {
-  localStorage.setItem("comments", JSON.stringify(comments.value));
-};
 
-onMounted(() => {
-  const storedComments = localStorage.getItem("comments");
-});
+
+
 </script>
 
 <style scoped>
@@ -223,6 +285,7 @@ onMounted(() => {
   width: 100%;
   min-height: 400px;
   padding: 30px;
+  padding-bottom: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -231,8 +294,21 @@ onMounted(() => {
 
 .comments-title {
   padding-top: 10px;
+  font-size: 20px;
+  color: #333333db;
+  cursor: pointer;
+}
+.comments-title{
+  padding-top: 10px;
   font-size: 25px;
   color: #333333db;
+  cursor: pointer;
+}
+
+.comments-title:hover{
+  padding-top: 10px;
+  font-size: 25px;
+  color: rgb(249, 210, 210);
 }
 
 .comments-body {
@@ -247,7 +323,7 @@ onMounted(() => {
   font: #999999;
   border: solid #999999 1px;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .comment-field {
@@ -274,8 +350,67 @@ onMounted(() => {
   cursor: pointer;
 }
 
+.comment-edit-button {
+  height: 40px;
+  margin-left: 10px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #cbcbcb;
+  color: white;
+}
+
+.comment-edit-button:hover {
+  background-color: #fce8f0;
+  color: #333333b9;
+  cursor: pointer;
+}
+
 .comments-list {
-  padding: 15px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 7px;
+  font-size: 14px;
+  color: #333333b9;
+  border-radius: 5px;
   border-bottom: dashed 1px rgb(236, 236, 236);
+  background-color: rgb(252, 252, 252);
+}
+.comment-text{
+  display: flex;
+}
+.comments-list-writer {
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.comments-list-content {
+  font-size: 15px;
+}
+
+.edit-delete {
+  display: flex;
+  font-size: 8px;
+  color: lightgray;
+  justify-content: flex-end;
+  align-items: center;
+}
+.edit-delete:hover{
+  cursor: pointer;
+}
+.edit-button {
+  padding-right:4px;
+}
+
+.edit-button:hover {
+  color: yellow;
+}
+
+.delete-button:hover {
+  color: red;
 }
 </style>

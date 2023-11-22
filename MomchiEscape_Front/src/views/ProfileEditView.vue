@@ -12,7 +12,8 @@
           <div class="profile-info-item">
             <span class="info-label">생년월일</span>
             <input v-model="user.birthday"
-            class="date-input" />
+              class="date-input"
+              type="date" />
           </div>
           <div class="profile-info-item">
             <span class="info-label">레벨</span>
@@ -116,7 +117,7 @@
 }
 
 .date-input {
-  width: 100%;
+  width: 340px;
   height: 40px;
   padding-right: 10px;
   font-size: 12px;

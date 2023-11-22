@@ -49,3 +49,12 @@ create table Record (
                         foreign key (user_id) references User(user_id),
                         foreign key (video_id) references Video(video_id)
 );
+
+create table Comment(
+                        comment_id int auto_increment primary key ,
+                        user_id int not null ,
+                        video_id int not null ,
+                        content text not null ,
+                        foreign key (user_id) references User(user_id),
+                        foreign key (video_id) references Video(video_id)
+);

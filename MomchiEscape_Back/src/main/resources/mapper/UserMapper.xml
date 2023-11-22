@@ -10,6 +10,7 @@
         <result column="nickname" property="nickname"/>
         <result column="birthday" property="birthday"/>
         <result column="level" property="level"/>
+        <result column="enabled" property="enabled"/>
     </resultMap>
 
     <insert id="save" parameterType="com.momchi.back.User.User">
@@ -44,9 +45,10 @@
         where user_id = #{userId}
     </select>
 
-    <delete id="deleteById" parameterType="Long">
-        delete from User
+    <update id="deleteById" parameterType="Long">
+        update User
+        set enabled=false
         where user_id = #{userId};
-    </delete>
+    </update>
 
 </mapper>

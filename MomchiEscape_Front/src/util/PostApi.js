@@ -28,4 +28,31 @@ function getPostsByCategory(category) {
     });
 }
 
-export { savePost, getPostsByCategory };
+function updatePost(post) {
+    return new Promise((resolve, reject) => {
+      axios
+        .put(`${API_URL}`,post)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+}
+
+function deletePost(postId) {
+    return new Promise((resolve, reject) => {
+      axios
+        .delete(`${API_URL}/${postId}`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+}
+
+
+export { savePost, getPostsByCategory,updatePost,deletePost };

@@ -1,6 +1,7 @@
 package com.momchi.back.Post;
 
 
+import com.momchi.back.Like.LikeServiceImpl;
 import com.momchi.back.Video.Video;
 import com.momchi.back.Video.VideoServiceImpl;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
     private final VideoServiceImpl videoService;
+    private final LikeServiceImpl likeService;
 
     @Override
     public void save(Post post) {
@@ -76,6 +78,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void deleteById(Long id) {
+        likeService.deleteByPostId(id);
         postRepository.deleteById(id);
     }
 

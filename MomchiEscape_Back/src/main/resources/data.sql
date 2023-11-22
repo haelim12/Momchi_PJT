@@ -7,6 +7,29 @@ VALUES ("김씨","asdf@asdf.com","asdf","파이리","1998-12-02","초보"),
 insert into User (name, email, password, nickname, birthday, level)
 VALUES ("아무나","asdf","asdf","피카츄","1998-12-02","고수");
 
+INSERT INTO Post (title, content, user_id, content_type, level, url, likeCnt)
+SELECT
+    CONCAT('제목', number) as title,
+    CONCAT('내용', number) as content,
+    FLOOR(1 + RAND() * 4) as user_id,
+    CASE
+        WHEN number % 3 = 0 THEN '후기'
+        WHEN number % 3 = 1 THEN '영상 추천'
+        WHEN number % 3 = 2 THEN 'honey팁'
+        END as content_type,
+    CASE
+        WHEN number % 3 = 0 THEN '초보'
+        WHEN number % 3 = 1 THEN '중수'
+        WHEN number % 3 = 2 THEN '고수'
+        END as level,
+    NULL as url,
+    0 as likeCnt
+FROM
+    (SELECT 1 as number UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5
+     UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10
+     UNION SELECT 11 UNION SELECT 12 UNION SELECT 13 UNION SELECT 14 UNION SELECT 15
+     UNION SELECT 16 UNION SELECT 17 UNION SELECT 18 UNION SELECT 19 UNION SELECT 20) AS numbers;
+
 insert into Video (url, level)
 VALUES ("https://www.youtube.com/embed/Ueb365f-bY0","초보"),
        ("https://www.youtube.com/embed/ytYwVE82O3M","초보"),

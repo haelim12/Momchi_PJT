@@ -21,7 +21,7 @@ public class UserServiceImpl {
     }
     public User login(User user) {
         User user1 = userRepository.findByEmail(user.getEmail());
-        if(user1 == null){
+        if(user1 == null || !user1.isEnabled()){
             throw new CustomException(ErrorHTTPStatus.USER_NOT_EXIST);
         }
         if (user1.getPassword().equals(user.getPassword())) {

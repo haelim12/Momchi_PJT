@@ -30,4 +30,9 @@
         where like_id = #{likeId};
     </delete>
 
+    <delete id="deleteByPostId" parameterType="Long">
+        delete from PostLike
+        where post_id = #{postId};
+    </delete>
+
 </mapper>

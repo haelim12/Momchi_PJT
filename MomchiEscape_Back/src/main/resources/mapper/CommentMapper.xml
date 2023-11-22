@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.momchi.back.Comment.CommentRepository">
+    <resultMap type="com.momchi.back.Comment.Comment" id="CommentMap">
+        <result column="comment_id" property="commentId"/>
+        <result column="user_id" property="userId"/>
+        <result column="video_id" property="videoId"/>
+        <result column="content" property="content"/>
+    </resultMap>
+
+    <insert id="saveComment" parameterType="com.momchi.back.Comment.Comment">
+        insert into Comment (user_id, video_id, content)
+        values (#{userId},#{videoId},#{content});
+    </insert>
+
+    <select id="getCommentByPostId" resultMap="CommentMap" parameterType="Long">
+        select * from Comment
+        where video_id = #{videoId};
+    </select>
+
+    <update id="updateComment" parameterType="com.momchi.back.Comment.Comment">
+        update Comment
+        set content=#{content}
+        where comment_id = #{commentId};
+    </update>
+
+    <delete id="deleteComment" parameterType="Long">
+        delete from Comment
+        where comment_id = #{commentId};
+    </delete>
+
+</mapper>

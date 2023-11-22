@@ -2,9 +2,6 @@
     <TheHeaderNav /> 
     <div class="main-container">
       <div class="body-container">
-        <div class="title-container">
-            <div class="title">Profile</div>
-        </div>
         <div class="profile-container">
           <div class="profile-img">
             <div class="profile-img-left">
@@ -19,11 +16,23 @@
             </div>
           </div>
           <div class="streak-title">Streak</div>
-          <div class="profile-streak">
-            <div v-for="(monthDays, index) in daysInYear" :key="index">
-              <Streak :monthDays="monthDays" :index="index" />
-            </div>
+          <div class="streak-container">
+              <div class="streak-date">
+                  <div class="days">일</div>
+                  <div class="days">월</div>
+                  <div class="days">화</div>
+                  <div class="days">수</div>
+                  <div class="days">목</div>
+                  <div class="days">금</div>
+                  <div class="days">토</div>
+              </div>
+              <div class="profile-streak">
+                <div v-for="(monthDays, index) in daysInYear" :key="index">
+                  <Streak :monthDays="monthDays" :index="index" />
+                </div>
+              </div>
           </div>
+
           <div class="streak-title">Exercise-Log</div>
           <div class="lower-container">
             <LogHeader/>
@@ -44,6 +53,7 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/userStore";
 import { getStreak, getAllRecord } from "../util/RecordApi";
 import { useRecordStore } from "../stores/recordStore";
+import { deleteAccount } from "@/util/UserApi";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -65,7 +75,16 @@ const toEdit = () => {
 }
 
 const toDelete = () => {
-  router.push("/profile-delete");
+  deleteAccount(userStore.user.userId)
+    .then(() => {
+      localStorage.clear();
+      router.push("/").then(() => {
+        window.location.reload();
+      });
+    })
+    .catch((e) => {
+      console.log(e);
+  })
 }
 
 const daysInYear = ref([]);
@@ -82,7 +101,7 @@ onMounted(() => {
 
   getAllRecord(userStore.user.userId)
     .then((data) => {
-      recordStore.records = data.slice(0, 17);
+      recordStore.records = data.slice(0, 15);
     })
     .catch((e) => {
       console.log(e);
@@ -123,7 +142,6 @@ const getAllDaysInYear = () => {
 }
 .body-container {
   width: 100%;
-  height: 120vh;
   max-width: 1200px;
   padding-top: 30px;
   padding-left: 6%;
@@ -134,7 +152,8 @@ const getAllDaysInYear = () => {
 }
 .profile-container {
   width: 100%;
-  height: 100%;
+  margin-bottom: 100px;
+  /* background-color: aqua; */
 }
 
 /* Profile-img */
@@ -157,26 +176,59 @@ const getAllDaysInYear = () => {
 }
 
 .profile-name {
-  font-size : 18px
+  font-size : 18px;
+  padding:3px;
 }
 .streak-day {
   font-size: 40px;
+  padding: 3px;
 }
 
 .edit-delete {
   display: flex;
+  padding-left: 5px;
 }
 
 .profile-edit {
   font-size: 12px;
   flex-wrap: wrap;
   padding-right: 10px;
+  color: lightgray;
 }
 .profile-delete {
   font-size: 12px;
+  color: lightgray;
+}
+
+.profile-edit:hover {
+  cursor: pointer;
+  color: #333333b9;
+}
+.profile-delete:hover {
+  cursor: pointer;
+  color: #333333b9;
 }
 
 /* Profile Streak */
+.streak-container{
+  display: flex;
+}
+.streak-date{
+  padding-top: 40px;
+  padding-bottom: 33px;
+  padding-right: 1px;
+  margin-left: 5px;
+  width: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 200px;
+  color: #333333a4;
+}
+.days{
+  font-size: 7px;
+}
 .lower-container{
   margin-top: 20px;
 }
